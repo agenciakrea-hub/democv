@@ -43,6 +43,13 @@ html,body{
   -webkit-font-smoothing:antialiased;
 }
 
+/* ─ CANVAS BACKGROUND ─ */
+#bgCanvas{
+  position:fixed;inset:0;
+  z-index:0;
+  pointer-events:none;
+}
+
 /* ─ SLIDER ─ */
 .slides-wrap{
   position:fixed;inset:0;top:var(--nav);
@@ -52,11 +59,12 @@ html,body{
   scroll-behavior:smooth;
   -webkit-overflow-scrolling:touch;
   scrollbar-width:none;
+  z-index:1;
 }
 .slides-wrap::-webkit-scrollbar{display:none}
 .slide{
   flex:0 0 100vw;
-  height:calc(100dvh - var(--nav) - 36px);
+  height:calc(100dvh - var(--nav) - 48px);
   scroll-snap-align:start;
   overflow-y:auto;overflow-x:hidden;
   scrollbar-width:thin;
@@ -97,6 +105,44 @@ nav{
 }
 .nav-dot.active{background:var(--accent);width:18px;border-radius:3px;}
 
+/* ─ LANG BTN ─ */
+#langBtn{
+  position:fixed;
+  top:calc(var(--nav) + 14px);
+  right:clamp(.9rem,4vw,2rem);
+  z-index:300;
+  width:46px;height:46px;
+  border-radius:10px;
+  background:rgba(17,20,30,.85);
+  border:1.5px solid var(--border-2);
+  color:var(--text);
+  font-family:'Space Mono',monospace;
+  font-size:.6rem;font-weight:700;
+  letter-spacing:1.5px;
+  cursor:pointer;
+  display:none;
+  align-items:center;justify-content:center;
+  transition:border-color var(--t),color var(--t),background var(--t),transform var(--t),box-shadow var(--t);
+  backdrop-filter:blur(12px);
+  flex-direction:column;
+  gap:1px;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .4s ease, border-color var(--t), color var(--t);
+}
+#langBtn.visible{
+  display:flex;opacity:1;pointer-events:all;
+}
+#langBtn:hover{
+  border-color:var(--accent);color:var(--accent);
+  background:var(--accent-dim);
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(91,244,181,.15);
+}
+#langBtn .lang-flag{ font-size:.85rem;line-height:1; }
+#langBtn .lang-code{ font-size:.55rem;letter-spacing:2px; }
+
 /* ─ PREMIUM ARROWS ─ */
 .nav-arrows{display:flex;gap:8px;flex-shrink:0;align-items:center}
 .arrow-btn{
@@ -111,8 +157,7 @@ nav{
 .arrow-btn::after{
   content:'';
   position:absolute;bottom:0;left:0;right:0;
-  height:1px;
-  background:var(--border-2);
+  height:1px;background:var(--border-2);
   transition:background var(--t);
 }
 .arrow-btn:hover:not(:disabled){color:var(--accent)}
@@ -123,41 +168,42 @@ nav{
 /* ─ BOTTOM PROGRESS BAR ─ */
 .progress-bar{
   position:fixed;bottom:0;left:0;right:0;z-index:200;
-  height:36px;
-  background:rgba(10,12,19,.9);backdrop-filter:blur(8px);
-  border-top:1px solid var(--border);
-  display:flex;align-items:center;justify-content:center;gap:14px;
+  height:48px;
+  background:rgba(10,12,19,.95);backdrop-filter:blur(12px);
+  border-top:1px solid var(--border-2);
+  display:flex;align-items:center;justify-content:center;gap:16px;
   padding:0 var(--pad);
 }
 .prog-label{
-  font-family:'Space Mono',monospace;font-size:.55rem;
-  color:var(--soft);letter-spacing:2px;text-transform:uppercase;
-  min-width:64px;
+  font-family:'Space Mono',monospace;font-size:.68rem;
+  color:var(--text);letter-spacing:2px;text-transform:uppercase;
+  min-width:80px;font-weight:700;
 }
 .prog-track{
-  flex:1;max-width:150px;height:1px;
+  flex:1;max-width:180px;height:2px;
   background:var(--surface-3);position:relative;
+  border-radius:2px;
 }
 .prog-fill{
-  position:absolute;top:0;left:0;height:1px;
+  position:absolute;top:0;left:0;height:100%;
   background:linear-gradient(90deg,var(--accent),rgba(91,244,181,.4));
+  border-radius:2px;
   transition:width .45s cubic-bezier(.4,0,.2,1);
 }
-/* premium page counter */
 .prog-counter{
-  display:flex;align-items:baseline;gap:2px;min-width:46px;justify-content:flex-end;
+  display:flex;align-items:baseline;gap:3px;min-width:56px;justify-content:flex-end;
 }
 .prog-cur{
-  font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;
   color:var(--accent);line-height:1;
 }
 .prog-sep{
-  font-family:'Space Mono',monospace;font-size:.45rem;
+  font-family:'Space Mono',monospace;font-size:.55rem;
   color:var(--muted);margin:0 2px;
 }
 .prog-tot{
-  font-family:'Space Mono',monospace;font-size:.58rem;
-  color:var(--muted);
+  font-family:'Space Mono',monospace;font-size:.72rem;
+  color:var(--soft);font-weight:700;
 }
 
 /* ─ SECTION LABELS ─ */
@@ -216,7 +262,7 @@ nav{
 }
 #slide-hero::before{
   content:'';position:absolute;inset:0;z-index:0;
-  background-image:radial-gradient(rgba(255,255,255,.02) 1px,transparent 1px);
+  background-image:radial-gradient(rgba(255,255,255,.018) 1px,transparent 1px);
   background-size:26px 26px;
   mask-image:radial-gradient(ellipse 80% 80% at 50% 40%,black 40%,transparent 100%);
 }
@@ -224,7 +270,7 @@ nav{
   content:'';position:absolute;
   top:-10%;left:50%;transform:translateX(-50%);
   width:500px;height:400px;
-  background:radial-gradient(ellipse,rgba(91,244,181,.07) 0%,transparent 70%);
+  background:radial-gradient(ellipse,rgba(91,244,181,.06) 0%,transparent 70%);
   pointer-events:none;z-index:0;
 }
 .hero-inner{position:relative;z-index:1}
@@ -267,77 +313,77 @@ nav{
   animation:fadeUp .7s .6s both ease;
 }
 
-/* ─ SWIPE CTA (prominent) ─ */
+/* ─ SWIPE CTA — more prominent ─ */
 .swipe-cta{
   position:absolute;
-  bottom:1.2rem;left:0;right:0;
+  bottom:1.4rem;left:0;right:0;
   display:flex;flex-direction:column;align-items:center;gap:10px;
   animation:fadeUp .7s .9s both ease;
   pointer-events:none;z-index:2;
 }
 .swipe-cta-inner{
-  display:flex;align-items:center;gap:14px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;gap:16px;
+  background:rgba(91,244,181,.08);
+  border:1.5px solid rgba(91,244,181,.35);
   border-radius:100px;
-  padding:.45rem 1.4rem;
-  backdrop-filter:blur(6px);
+  padding:.7rem 2rem;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 28px rgba(91,244,181,.12), inset 0 0 20px rgba(91,244,181,.04);
 }
 .swipe-phone{
   position:relative;
-  width:22px;height:34px;
-  border:1.5px solid var(--muted);
-  border-radius:5px;flex-shrink:0;
+  width:24px;height:36px;
+  border:2px solid rgba(91,244,181,.7);
+  border-radius:6px;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
 }
 .swipe-phone::before{
   content:'';
   position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
   width:6px;height:6px;border-radius:50%;
-  background:var(--muted);
+  background:rgba(91,244,181,.6);
 }
 .swipe-finger{
   position:absolute;
-  top:50%;left:-4px;
+  top:50%;left:-5px;
   transform:translateY(-50%);
-  width:10px;height:10px;
+  width:11px;height:11px;
   border-radius:50%;
   background:var(--accent);
-  opacity:.85;
+  opacity:.9;
   animation:fingerSwipe 1.6s cubic-bezier(.4,0,.2,1) infinite;
 }
 @keyframes fingerSwipe{
-  0%{left:-4px;opacity:0}
-  15%{opacity:.9}
-  60%{left:18px;opacity:.9}
+  0%{left:-5px;opacity:0}
+  15%{opacity:1}
+  60%{left:20px;opacity:1}
   80%{opacity:0}
-  100%{left:18px;opacity:0}
+  100%{left:20px;opacity:0}
 }
 .swipe-arrows{
-  display:flex;gap:3px;align-items:center;
+  display:flex;gap:5px;align-items:center;
 }
 .swipe-arrows span{
-  display:block;width:7px;height:7px;
-  border-right:1.5px solid var(--accent);
-  border-top:1.5px solid var(--accent);
+  display:block;width:9px;height:9px;
+  border-right:2px solid var(--accent);
+  border-top:2px solid var(--accent);
   transform:rotate(45deg);
-  opacity:.3;
   animation:arrowSeq 1.6s ease infinite;
 }
-.swipe-arrows span:nth-child(1){animation-delay:0s}
-.swipe-arrows span:nth-child(2){animation-delay:.18s}
-.swipe-arrows span:nth-child(3){animation-delay:.36s}
+.swipe-arrows span:nth-child(1){animation-delay:0s;opacity:.4}
+.swipe-arrows span:nth-child(2){animation-delay:.18s;opacity:.7}
+.swipe-arrows span:nth-child(3){animation-delay:.36s;opacity:1}
 @keyframes arrowSeq{
-  0%,100%{opacity:.2}
+  0%,100%{opacity:.25}
   50%{opacity:1}
 }
 .swipe-cta-label{
-  font-family:'Space Mono',monospace;font-size:.6rem;
+  font-family:'Space Mono',monospace;font-size:.7rem;
   letter-spacing:2px;text-transform:uppercase;
-  color:var(--soft);
+  color:var(--accent);font-weight:700;
 }
 
-/* ─ SCROLL DOWN HINT (Exp slide) ─ */
+/* ─ SCROLL DOWN HINT ─ */
 .scroll-down-hint{
   position:sticky;bottom:0;left:0;right:0;
   display:flex;flex-direction:column;align-items:flex-end;
@@ -369,10 +415,10 @@ nav{
   50%{transform:rotate(45deg) translateY(2px);opacity:1}
 }
 
-/* ─ EXP SWIPE RIGHT (shown at bottom) ─ */
+/* ─ EXP SWIPE RIGHT ─ */
 .exp-swipe-right{
   position:fixed;
-  bottom:48px;left:50%;transform:translateX(-50%);
+  bottom:60px;left:50%;transform:translateX(-50%);
   z-index:150;
   display:flex;align-items:center;gap:10px;
   background:rgba(10,12,19,.9);
@@ -438,54 +484,34 @@ nav{
   }
   .exp-item:hover{background:var(--surface)}
 }
-
-/* PREMIUM DATE STYLING */
 .exp-date{
-  font-family:'Syne',sans-serif;
-  font-weight:800;
-  font-size:.92rem;
-  color:var(--text);
-  padding-top:4px;
-  line-height:1.5;
-  margin-bottom:.5rem;
-  display:flex;
-  flex-direction:column;
-  gap:2px;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:.92rem;
+  color:var(--text);padding-top:4px;line-height:1.5;
+  margin-bottom:.5rem;display:flex;flex-direction:column;gap:2px;
 }
 @media(min-width:600px){.exp-date{margin-bottom:0}}
 .exp-date .yr{display:block;color:var(--text);line-height:1.1}
 .exp-date .yr-sep{
-  font-family:'Space Mono',monospace;
-  font-size:.55rem;color:var(--muted);font-weight:400;
-  letter-spacing:1px;line-height:1;
+  font-family:'Space Mono',monospace;font-size:.55rem;
+  color:var(--muted);font-weight:400;letter-spacing:1px;line-height:1;
 }
 .exp-date .yr-end{display:block;color:var(--soft);font-size:.85rem}
-/* "actual / hoy" badge */
 .badge-actual{
   display:inline-flex;align-items:center;gap:5px;
-  background:rgba(202,255,0,.1);
-  border:1px solid rgba(202,255,0,.25);
-  border-radius:100px;
-  padding:1px 8px 1px 5px;
-  font-family:'Space Mono',monospace;
-  font-size:.58rem;font-weight:700;
-  color:var(--krea);
-  letter-spacing:.5px;text-transform:uppercase;
-  line-height:1.6;
-  margin-top:2px;
-  width:fit-content;
+  background:rgba(202,255,0,.1);border:1px solid rgba(202,255,0,.25);
+  border-radius:100px;padding:1px 8px 1px 5px;
+  font-family:'Space Mono',monospace;font-size:.58rem;font-weight:700;
+  color:var(--krea);letter-spacing:.5px;text-transform:uppercase;
+  line-height:1.6;margin-top:2px;width:fit-content;
 }
 .badge-actual::before{
-  content:'';display:block;
-  width:5px;height:5px;border-radius:50%;
-  background:var(--krea);
-  animation:pulseGreen 1.6s ease infinite;
+  content:'';display:block;width:5px;height:5px;border-radius:50%;
+  background:var(--krea);animation:pulseGreen 1.6s ease infinite;
 }
 @keyframes pulseGreen{
   0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(202,255,0,.4)}
   50%{opacity:.7;box-shadow:0 0 0 4px rgba(202,255,0,0)}
 }
-
 .exp-header{display:flex;align-items:center;gap:9px;margin-bottom:2px}
 .exp-logo{
   width:28px;height:28px;border-radius:7px;
@@ -493,14 +519,10 @@ nav{
   display:flex;align-items:center;justify-content:center;
 }
 .exp-logo img{width:100%;height:100%;object-fit:contain}
-/* Krea logo cell */
 .krea-logo-cell{
   background:#0a0a00;
   border:1px solid rgba(202,255,0,.2);
-  font-family:'Syne',sans-serif;font-weight:800;font-style:italic;
-  font-size:.65rem;color:var(--krea);
-  letter-spacing:-.5px;
-  flex-shrink:0;
+  padding:2px;
 }
 .exp-company{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem}
 .exp-company .krea-text{font-size:.95rem}
@@ -518,18 +540,12 @@ nav{
 .exp-tag{
   font-family:'Space Mono',monospace;font-size:.6rem;
   padding:2px 8px;border-radius:4px;
-  background:var(--surface-2);border:1px solid var(--border);
-  color:var(--muted);
+  background:var(--surface-2);border:1px solid var(--border);color:var(--muted);
 }
-.tiendanube-tag{
-  border-color:rgba(91,155,244,.4);
-  color:#5b9bf4;background:rgba(91,155,244,.07);
-}
+.tiendanube-tag{border-color:rgba(91,155,244,.4);color:#5b9bf4;background:rgba(91,155,244,.07)}
 
 /* ─ SKILLS SLIDE ─ */
-.skills-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:8px;
-}
+.skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 @media(min-width:700px){.skills-grid{grid-template-columns:repeat(4,1fr)}}
 .sk-card{padding:1rem;border-radius:var(--r);background:var(--surface);border:1px solid var(--border);}
 .sk-icon{width:34px;height:34px;border-radius:9px;margin-bottom:.7rem;display:flex;align-items:center;justify-content:center;}
@@ -598,8 +614,6 @@ nav{
 }
 .foot-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,8vw,4rem);letter-spacing:-2px;margin-bottom:.3rem}
 .foot-tag{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.8px;margin-bottom:1.2rem}
-
-/* Currently working at - Krea badge */
 .working-at{
   display:flex;flex-direction:column;align-items:center;gap:.5rem;
   margin-bottom:1.5rem;
@@ -610,25 +624,21 @@ nav{
 }
 .krea-badge{
   display:inline-flex;align-items:center;
-  background:#0a0a00;
-  border:1px solid rgba(202,255,0,.3);
-  border-radius:8px;
-  padding:.45rem 1.1rem;
-  gap:1px;
+  background:#0a0a00;border:1px solid rgba(202,255,0,.3);border-radius:10px;
+  padding:.5rem 1.2rem;gap:8px;
   box-shadow:0 0 20px rgba(202,255,0,.08),inset 0 0 20px rgba(202,255,0,.02);
+}
+.krea-badge-img{
+  width:26px;height:26px;border-radius:5px;object-fit:contain;
 }
 .krea-badge-plus{
   font-family:'Syne',sans-serif;font-weight:800;
-  font-size:1.4rem;color:var(--krea);
-  line-height:1;
+  font-size:1.4rem;color:var(--krea);line-height:1;
 }
 .krea-badge-name{
   font-family:'Syne',sans-serif;font-weight:800;font-style:italic;
-  font-size:1.4rem;color:var(--krea);
-  line-height:1;letter-spacing:-.5px;
+  font-size:1.4rem;color:var(--krea);line-height:1;letter-spacing:-.5px;
 }
-
-/* contact links */
 .foot-links{
   display:flex;flex-direction:column;gap:.65rem;align-items:center;
   font-family:'Space Mono',monospace;font-size:.73rem;
@@ -643,31 +653,33 @@ nav{
 }
 .foot-link:hover{color:var(--accent);border-color:rgba(91,244,181,.3);background:var(--accent-dim)}
 .foot-link svg{flex-shrink:0;opacity:.5}
-/* blurred private data */
 .contact-private{
   filter:blur(5px) saturate(0);
   user-select:none;pointer-events:none;
-  font-size:.7rem;color:var(--text);
-  flex:1;
+  font-size:.7rem;color:var(--text);flex:1;
 }
 .contact-lock{
-  margin-left:auto;
-  font-size:.55rem;color:var(--muted);
-  font-family:'Space Mono',monospace;letter-spacing:1px;
-  opacity:.6;
+  margin-left:auto;font-size:.55rem;color:var(--muted);
+  font-family:'Space Mono',monospace;letter-spacing:1px;opacity:.6;
 }
 
-/* back to top button */
+/* ─ BACK TO TOP — more visible ─ */
 .btn-top{
-  margin-top:1.4rem;
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:'Space Mono',monospace;font-size:.6rem;
-  color:var(--muted);letter-spacing:2px;text-transform:uppercase;
-  border:none;background:transparent;cursor:pointer;
-  padding:.4rem .8rem;border-radius:6px;
-  transition:color var(--t);
+  margin-top:1.6rem;
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'Space Mono',monospace;font-size:.65rem;
+  color:var(--soft);letter-spacing:2px;text-transform:uppercase;
+  border:1.5px solid var(--border-2);
+  background:var(--surface);
+  cursor:pointer;
+  padding:.65rem 1.4rem;border-radius:10px;
+  transition:color var(--t),border-color var(--t),background var(--t),transform var(--t);
+  font-weight:700;
 }
-.btn-top:hover{color:var(--accent)}
+.btn-top:hover{
+  color:var(--accent);border-color:rgba(91,244,181,.4);
+  background:var(--accent-dim);transform:translateY(-2px);
+}
 .btn-top svg{transition:transform var(--t)}
 .btn-top:hover svg{transform:translateY(-3px)}
 
@@ -678,6 +690,15 @@ nav{
 </head>
 <body>
 
+<!-- CANVAS BACKGROUND -->
+<canvas id="bgCanvas"></canvas>
+
+<!-- LANG BUTTON (hero only) -->
+<button id="langBtn" aria-label="Switch language">
+  <span class="lang-flag" id="langFlag">🇬🇧</span>
+  <span class="lang-code" id="langCode">EN</span>
+</button>
+
 <!-- NAV -->
 <nav>
   <div class="nav-in">
@@ -685,13 +706,13 @@ nav{
     <div class="nav-dots" id="navDots"></div>
     <div class="nav-arrows">
       <button class="arrow-btn" id="btnPrev" aria-label="Anterior">
-        <svg width="38" height="14" viewBox="0 0 38 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="38" height="14" viewBox="0 0 38 14" fill="none">
           <line x1="36" y1="7" x2="2" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           <path d="M9 1L2 7L9 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
       </button>
       <button class="arrow-btn" id="btnNext" aria-label="Siguiente">
-        <svg width="38" height="14" viewBox="0 0 38 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="38" height="14" viewBox="0 0 38 14" fill="none">
           <line x1="2" y1="7" x2="36" y2="7" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
           <path d="M29 1L36 7L29 13" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
         </svg>
@@ -704,11 +725,11 @@ nav{
 <div class="slides-wrap" id="slidesWrap">
 
   <!-- SLIDE 1: HERO -->
-  <div class="slide" id="slide-hero" data-label="Inicio">
+  <div class="slide" id="slide-hero" data-label-es="Inicio" data-label-en="Home" data-label="Inicio">
     <div class="hero-inner">
       <h1 class="hero-name">Matias<br><span class="acc">Pedreira.</span></h1>
-      <p class="hero-sub">Full Stack Developer &amp; Tech Lead</p>
-      <p class="hero-bio">
+      <p class="hero-sub" data-i18n="hero-sub">Full Stack Developer &amp; Tech Lead</p>
+      <p class="hero-bio" data-i18n="hero-bio">
         Desarrollador full stack con <strong>enfoque integral</strong>: desde servidores y bases de datos hasta la experiencia del usuario final.
         <strong>Autónomo, proactivo y orientado a resultados.</strong>
         Especializado en digitalizar y optimizar procesos de negocios —
@@ -724,15 +745,15 @@ nav{
         <span class="chip">APIs REST</span>
       </div>
       <div class="hero-cta">
-        <button class="btn-p" onclick="goToSlide(2)">Ver experiencia →</button>
+        <button class="btn-p" onclick="goToSlide(2)" data-i18n="cta-exp">Ver experiencia →</button>
       </div>
       <p class="loc">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        Buenos Aires, Argentina · 24 años
+        <span data-i18n="hero-loc">Buenos Aires, Argentina · 24 años</span>
       </p>
     </div>
 
-    <!-- PROMINENT SWIPE ANIMATION -->
+    <!-- SWIPE CTA -->
     <div class="swipe-cta">
       <div class="swipe-cta-inner">
         <div class="swipe-phone">
@@ -741,34 +762,34 @@ nav{
         <div class="swipe-arrows">
           <span></span><span></span><span></span>
         </div>
-        <span class="swipe-cta-label">deslizá para explorar</span>
+        <span class="swipe-cta-label" data-i18n="swipe-label">deslizá para explorar</span>
       </div>
     </div>
   </div>
 
   <!-- SLIDE 2: SOBRE -->
-  <div class="slide" id="slide-sobre" data-label="Sobre mí">
-    <p class="section-label">01 &nbsp;Sobre mí</p>
-    <h2 class="section-title">Código, diseño<br>y negocio.</h2>
+  <div class="slide" id="slide-sobre" data-label-es="Sobre mí" data-label-en="About" data-label="Sobre mí">
+    <p class="section-label"><span data-i18n="s2-label">01 &nbsp;Sobre mí</span></p>
+    <h2 class="section-title" data-i18n="s2-title">Código, diseño<br>y negocio.</h2>
     <div class="about-grid">
       <div class="about-text">
-        <p>Soy desarrollador full stack con <strong>capacidad de llevar proyectos de principio a fin sin supervisión constante</strong>. Entiendo el stack completo: arquitectura de servidores, modelos de datos y la interfaz que ve el usuario final.</p>
-        <p>Mi paso por <strong>Despegar.com</strong> me dio escala real: sistemas críticos con millones de transacciones en viajes y aviación. Esa experiencia moldeó cómo pienso la <em>confiabilidad, la performance y la digitalización de procesos complejos</em>.</p>
-        <p>Hoy en <span class="krea-text"><span class="krea-plus">+</span>Krea</span> opero como Tech Lead, tomando requerimientos y entregando productos completos. En paralelo, trabajo con empresas tradicionales que necesitan dar el salto digital.</p>
+        <p data-i18n="s2-p1">Soy desarrollador full stack con <strong>capacidad de llevar proyectos de principio a fin sin supervisión constante</strong>. Entiendo el stack completo: arquitectura de servidores, modelos de datos y la interfaz que ve el usuario final.</p>
+        <p data-i18n="s2-p2">Mi paso por <strong>Despegar.com</strong> me dio escala real: sistemas críticos con millones de transacciones en viajes y aviación. Esa experiencia moldeó cómo pienso la <em>confiabilidad, la performance y la digitalización de procesos complejos</em>.</p>
+        <p data-i18n="s2-p3">Hoy en <span class="krea-text"><span class="krea-plus">+</span>Krea</span> opero como Tech Lead, tomando requerimientos y entregando productos completos. En paralelo, trabajo con empresas tradicionales que necesitan dar el salto digital.</p>
       </div>
       <div class="stats">
-        <div class="stat"><div class="stat-n">4+</div><div class="stat-l">Años exp.</div></div>
-        <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Autonomía</div></div>
-        <div class="stat"><div class="stat-n">3</div><div class="stat-l">Certificaciones</div></div>
-        <div class="stat"><div class="stat-n">C1</div><div class="stat-l">Inglés</div></div>
+        <div class="stat"><div class="stat-n">4+</div><div class="stat-l" data-i18n="stat-exp">Años exp.</div></div>
+        <div class="stat"><div class="stat-n">100%</div><div class="stat-l" data-i18n="stat-aut">Autonomía</div></div>
+        <div class="stat"><div class="stat-n">3</div><div class="stat-l" data-i18n="stat-cert">Certificaciones</div></div>
+        <div class="stat"><div class="stat-n">C1</div><div class="stat-l" data-i18n="stat-lang">Inglés</div></div>
       </div>
     </div>
   </div>
 
   <!-- SLIDE 3: EXPERIENCIA -->
-  <div class="slide" id="slide-exp" data-label="Experiencia">
-    <p class="section-label">02 &nbsp;Experiencia</p>
-    <h2 class="section-title">Trayectoria<br>profesional.</h2>
+  <div class="slide" id="slide-exp" data-label-es="Experiencia" data-label-en="Experience" data-label="Experiencia">
+    <p class="section-label"><span data-i18n="s3-label">02 &nbsp;Experiencia</span></p>
+    <h2 class="section-title" data-i18n="s3-title">Trayectoria<br>profesional.</h2>
     <div class="exp-list">
 
       <div class="exp-item">
@@ -782,10 +803,10 @@ nav{
             <div class="exp-logo" style="background:#e8f4fd"><img src="fiuba.png" alt="FIUBA"></div>
             <div class="exp-company">FIUBA — UBA</div>
           </div>
-          <div class="exp-role">Prácticas Profesionales Supervisadas</div>
-          <div class="exp-desc"><em style="color:var(--accent);font-style:normal">Prácticas en el marco de la carrera de Analista de Sistemas</em> de Computación. Aplicación de conocimientos técnicos en entornos reales bajo supervisión académica.</div>
+          <div class="exp-role" data-i18n="job1-role">Prácticas Profesionales Supervisadas</div>
+          <div class="exp-desc" data-i18n="job1-desc"><em style="color:var(--accent);font-style:normal">Prácticas en el marco de la carrera de Analista de Sistemas</em> de Computación. Aplicación de conocimientos técnicos en entornos reales bajo supervisión académica.</div>
           <ul class="exp-bullets">
-            <li><em>Trainee durante todo 2021</em> con incorporación a proyectos reales desde el primer día.</li>
+            <li data-i18n="job1-b1"><em>Trainee durante todo 2021</em> con incorporación a proyectos reales desde el primer día.</li>
           </ul>
         </div>
       </div>
@@ -801,12 +822,12 @@ nav{
             <div class="exp-logo" style="background:#fff"><img src="despegar.png" alt="Despegar"></div>
             <div class="exp-company">Despegar.com</div>
           </div>
-          <div class="exp-role">Junior Frontend Developer</div>
-          <div class="exp-desc"><strong>Exposición directa a sistemas de alto tráfico</strong> con millones de usuarios activos en Argentina y la región.</div>
+          <div class="exp-role" data-i18n="job2-role">Junior Frontend Developer</div>
+          <div class="exp-desc" data-i18n="job2-desc"><strong>Exposición directa a sistemas de alto tráfico</strong> con millones de usuarios activos en Argentina y la región.</div>
           <ul class="exp-bullets">
-            <li>Desarrollo de interfaces de búsqueda y reserva de vuelos y hoteles.</li>
-            <li>Equipos ágiles con ciclos de entrega continuos (CI/CD).</li>
-            <li><em>Trainee en el segundo semestre de 2021; rol formal desde 2022.</em></li>
+            <li data-i18n="job2-b1">Desarrollo de interfaces de búsqueda y reserva de vuelos y hoteles.</li>
+            <li data-i18n="job2-b2">Equipos ágiles con ciclos de entrega continuos (CI/CD).</li>
+            <li data-i18n="job2-b3"><em>Trainee en el segundo semestre de 2021; rol formal desde 2022.</em></li>
           </ul>
           <div class="exp-tags"><span class="exp-tag">React</span><span class="exp-tag">JavaScript</span><span class="exp-tag">HTML/CSS</span><span class="exp-tag">Git</span><span class="exp-tag">Scrum</span></div>
         </div>
@@ -823,15 +844,15 @@ nav{
             <div class="exp-logo" style="background:var(--surface-2)">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
             </div>
-            <div class="exp-company">Desarrollo Freelance</div>
+            <div class="exp-company" data-i18n="job3-company">Desarrollo Freelance</div>
           </div>
-          <div class="exp-role">Full Stack Developer Independiente</div>
-          <div class="exp-desc"><em style="color:var(--accent);font-style:normal">Trabajo con empresas y emprendimientos</em> que buscan <strong>digitalizar operaciones y optimizar procesos internos</strong>. Partner oficial de <strong style="color:var(--text)">Tiendanube</strong>, colaborando en el ecosistema de e-commerce para la región.</div>
+          <div class="exp-role" data-i18n="job3-role">Full Stack Developer Independiente</div>
+          <div class="exp-desc" data-i18n="job3-desc"><em style="color:var(--accent);font-style:normal">Trabajo con empresas y emprendimientos</em> que buscan <strong>digitalizar operaciones y optimizar procesos internos</strong>. Partner oficial de <strong style="color:var(--text)">Tiendanube</strong>, colaborando en el ecosistema de e-commerce para la región.</div>
           <ul class="exp-bullets">
-            <li>Tracking y optimización logística en tiempo real.</li>
-            <li>Plataformas de digitalización para negocios con alta dependencia de procesos manuales.</li>
-            <li>Consultoría en arquitectura para startups en etapas tempranas.</li>
-            <li><em>Partner oficial de Tiendanube</em> — desarrollo e integración de tiendas en el ecosistema de la plataforma.</li>
+            <li data-i18n="job3-b1">Tracking y optimización logística en tiempo real.</li>
+            <li data-i18n="job3-b2">Plataformas de digitalización para negocios con alta dependencia de procesos manuales.</li>
+            <li data-i18n="job3-b3">Consultoría en arquitectura para startups en etapas tempranas.</li>
+            <li data-i18n="job3-b4"><em>Partner oficial de Tiendanube</em> — desarrollo e integración de tiendas en el ecosistema de la plataforma.</li>
           </ul>
           <div class="exp-tags">
             <span class="exp-tag">React</span><span class="exp-tag">Node.js</span><span class="exp-tag">APIs REST</span><span class="exp-tag">PostgreSQL</span><span class="exp-tag">MongoDB</span><span class="exp-tag">GCP</span>
@@ -844,19 +865,22 @@ nav{
         <div class="exp-date">
           <span class="yr">2025</span>
           <span class="yr-sep">──────</span>
-          <span class="badge-actual">hoy</span>
+          <span class="badge-actual" data-i18n="badge-today">hoy</span>
         </div>
         <div>
           <div class="exp-header">
-            <div class="exp-logo krea-logo-cell">+K</div>
+            <!-- KREA LOGO FROM REPO -->
+            <div class="exp-logo krea-logo-cell">
+              <img src="krea.png" alt="Krea" style="width:100%;height:100%;object-fit:contain">
+            </div>
             <div class="exp-company"><span class="krea-text"><span class="krea-plus">+</span>Krea</span></div>
           </div>
-          <div class="exp-role">Full Stack Developer Semi-Sr. / Tech Lead</div>
-          <div class="exp-desc">Rol de referencia técnica. <strong>Gestión integral</strong>: de requerimientos hasta producción.</div>
+          <div class="exp-role" data-i18n="job4-role">Full Stack Developer Semi-Sr. / Tech Lead</div>
+          <div class="exp-desc" data-i18n="job4-desc">Rol de referencia técnica. <strong>Gestión integral</strong>: de requerimientos hasta producción.</div>
           <ul class="exp-bullets">
-            <li>Sitios institucionales, e-commerce y aplicaciones web a medida.</li>
-            <li>Arquitectura de servidores y modelos de base de datos.</li>
-            <li>Operación <strong>100% autónoma</strong>, sin supervisión técnica.</li>
+            <li data-i18n="job4-b1">Sitios institucionales, e-commerce y aplicaciones web a medida.</li>
+            <li data-i18n="job4-b2">Arquitectura de servidores y modelos de base de datos.</li>
+            <li data-i18n="job4-b3">Operación <strong>100% autónoma</strong>, sin supervisión técnica.</li>
           </ul>
           <div class="exp-tags"><span class="exp-tag">React</span><span class="exp-tag">Node.js</span><span class="exp-tag">TypeScript</span><span class="exp-tag">AWS</span><span class="exp-tag">SQL</span></div>
         </div>
@@ -864,10 +888,9 @@ nav{
 
     </div>
 
-    <!-- SCROLL DOWN HINT -->
     <div class="scroll-down-hint" id="scrollDownHint">
       <div class="scroll-d-inner">
-        <span>scroll</span>
+        <span data-i18n="scroll-hint">scroll</span>
         <div class="scroll-d-arrow">
           <span></span><span></span><span></span>
         </div>
@@ -876,154 +899,155 @@ nav{
   </div>
 
   <!-- SLIDE 4: SKILLS -->
-  <div class="slide" id="slide-skills" data-label="Skills">
-    <p class="section-label">03 &nbsp;Habilidades</p>
-    <h2 class="section-title">Stack técnico<br>completo.</h2>
+  <div class="slide" id="slide-skills" data-label-es="Skills" data-label-en="Skills" data-label="Skills">
+    <p class="section-label"><span data-i18n="s4-label">03 &nbsp;Habilidades</span></p>
+    <h2 class="section-title" data-i18n="s4-title">Stack técnico<br>completo.</h2>
     <div class="skills-grid" style="margin-top:1.2rem">
       <div class="sk-card">
         <div class="sk-icon a"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-        <div class="sk-title">Interfaces</div>
-        <div class="sk-sub">Web moderna y apps</div>
+        <div class="sk-title" data-i18n="sk1-title">Interfaces</div>
+        <div class="sk-sub" data-i18n="sk1-sub">Web moderna y apps</div>
         <div class="sk-tags"><span class="sk-tag">React</span><span class="sk-tag">TypeScript</span><span class="sk-tag">JavaScript</span><span class="sk-tag">HTML/CSS</span><span class="sk-tag">Next.js</span></div>
       </div>
       <div class="sk-card">
         <div class="sk-icon b"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--indigo)" stroke-width="1.8"><path d="M20 9l-8-6-8 6v11a1 1 0 001 1h14a1 1 0 001-1V9z"/><path d="M9 22V12h6v10"/></svg></div>
-        <div class="sk-title">Servidores &amp; APIs</div>
-        <div class="sk-sub">Back-end y servicios</div>
+        <div class="sk-title" data-i18n="sk2-title">Servidores &amp; APIs</div>
+        <div class="sk-sub" data-i18n="sk2-sub">Back-end y servicios</div>
         <div class="sk-tags"><span class="sk-tag">Node.js</span><span class="sk-tag">REST APIs</span><span class="sk-tag">Express</span><span class="sk-tag">Auth</span></div>
       </div>
       <div class="sk-card">
         <div class="sk-icon c"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" stroke-width="1.8"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg></div>
-        <div class="sk-title">Datos &amp; Cloud</div>
-        <div class="sk-sub">DB, infra y DevOps</div>
+        <div class="sk-title" data-i18n="sk3-title">Datos &amp; Cloud</div>
+        <div class="sk-sub" data-i18n="sk3-sub">DB, infra y DevOps</div>
         <div class="sk-tags"><span class="sk-tag">SQL</span><span class="sk-tag">NoSQL</span><span class="sk-tag">AWS</span><span class="sk-tag">GCP</span><span class="sk-tag">Git</span></div>
       </div>
       <div class="sk-card">
         <div class="sk-icon d"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="1.8"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-        <div class="sk-title">Diseño &amp; UX</div>
-        <div class="sk-sub">UI centrada en el usuario</div>
+        <div class="sk-title" data-i18n="sk4-title">Diseño &amp; UX</div>
+        <div class="sk-sub" data-i18n="sk4-sub">UI centrada en el usuario</div>
         <div class="sk-tags"><span class="sk-tag">Figma</span><span class="sk-tag">UX/UI</span><span class="sk-tag">Wireframing</span><span class="sk-tag">Analítica</span></div>
       </div>
     </div>
   </div>
 
   <!-- SLIDE 5: CERTS -->
-  <div class="slide" id="slide-certs" data-label="Certs">
-    <p class="section-label">04 &nbsp;Certificaciones</p>
-    <h2 class="section-title">Credenciales<br>verificadas.</h2>
+  <div class="slide" id="slide-certs" data-label-es="Certs" data-label-en="Certs" data-label="Certs">
+    <p class="section-label"><span data-i18n="s5-label">04 &nbsp;Certificaciones</span></p>
+    <h2 class="section-title" data-i18n="s5-title">Credenciales<br>verificadas.</h2>
     <div class="cert-grid" style="margin-top:1.2rem">
       <div class="cert-card">
         <div class="cert-logo" style="background:#1a1f30">
           <svg width="34" height="34" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.37-.76-2.84-.76-4.59s.27-3.22.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
         </div>
-        <div><div class="cert-issuer">Google</div><div class="cert-name">Google Analytics Certification</div></div>
-        <div class="cert-desc">Medición web, audiencias, seguimiento de conversiones y reporting para decisiones de negocio.</div>
-        <div class="cert-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>Certificado verificado</div>
+        <div><div class="cert-issuer">Google</div><div class="cert-name" data-i18n="cert1-name">Google Analytics Certification</div></div>
+        <div class="cert-desc" data-i18n="cert1-desc">Medición web, audiencias, seguimiento de conversiones y reporting para decisiones de negocio.</div>
+        <div class="cert-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg><span data-i18n="cert-verified">Certificado verificado</span></div>
       </div>
       <div class="cert-card">
         <div class="cert-logo" style="background:#1a1f30">
           <svg width="34" height="34" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.37-.76-2.84-.76-4.59s.27-3.22.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
         </div>
-        <div><div class="cert-issuer">Google · Coursera</div><div class="cert-name">UX Design Professional Certificate</div></div>
-        <div class="cert-desc">Diseño centrado en el usuario, prototipado en Figma e investigación de usuarios.</div>
-        <div class="cert-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>Certificado verificado</div>
+        <div><div class="cert-issuer">Google · Coursera</div><div class="cert-name" data-i18n="cert2-name">UX Design Professional Certificate</div></div>
+        <div class="cert-desc" data-i18n="cert2-desc">Diseño centrado en el usuario, prototipado en Figma e investigación de usuarios.</div>
+        <div class="cert-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg><span data-i18n="cert-verified2">Certificado verificado</span></div>
       </div>
       <div class="cert-card">
         <div class="cert-logo" style="background:#f7ede2;padding:4px">
           <img src="coder.png" alt="Coderhouse" style="width:100%;height:100%;object-fit:contain;border-radius:6px">
         </div>
-        <div><div class="cert-issuer">Coderhouse</div><div class="cert-name">Desarrollo Web Avanzado</div></div>
-        <div class="cert-desc">Arquitectura de aplicaciones modernas, performance, seguridad y buenas prácticas full stack.</div>
-        <div class="cert-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg>Certificado verificado</div>
+        <div><div class="cert-issuer">Coderhouse</div><div class="cert-name" data-i18n="cert3-name">Desarrollo Web Avanzado</div></div>
+        <div class="cert-desc" data-i18n="cert3-desc">Arquitectura de aplicaciones modernas, performance, seguridad y buenas prácticas full stack.</div>
+        <div class="cert-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 6l3 3 5-5"/></svg><span data-i18n="cert-verified3">Certificado verificado</span></div>
       </div>
     </div>
   </div>
 
   <!-- SLIDE 6: EDUCACION -->
-  <div class="slide" id="slide-edu" data-label="Educación">
-    <p class="section-label">05 &nbsp;Educación</p>
-    <h2 class="section-title">Formación<br>académica.</h2>
+  <div class="slide" id="slide-edu" data-label-es="Educación" data-label-en="Education" data-label="Educación">
+    <p class="section-label"><span data-i18n="s6-label">05 &nbsp;Educación</span></p>
+    <h2 class="section-title" data-i18n="s6-title">Formación<br>académica.</h2>
     <div class="edu-list" style="margin-top:1rem">
       <div class="edu-card">
         <div class="edu-year">2019 – 2023</div>
         <div>
-          <div class="edu-degree">Analista de Sistemas de Computación</div>
+          <div class="edu-degree" data-i18n="edu1-deg">Analista de Sistemas de Computación</div>
           <div class="edu-school">Facultad de Ingeniería — UBA (FIUBA)</div>
-          <div class="edu-desc">Formación sólida en algoritmos, arquitectura de software, bases de datos, redes y gestión de proyectos. Egresado con prácticas profesionales completadas.</div>
+          <div class="edu-desc" data-i18n="edu1-desc">Formación sólida en algoritmos, arquitectura de software, bases de datos, redes y gestión de proyectos. Egresado con prácticas profesionales completadas.</div>
         </div>
       </div>
       <div class="edu-card">
         <div class="edu-year">2023 – 2024</div>
         <div>
-          <div class="edu-degree">UX/UI Design — Cursos especializados</div>
-          <div class="edu-school">Formación continua</div>
-          <div class="edu-desc">Figma, design systems, prototipado de alta fidelidad y evaluación de usabilidad.</div>
+          <div class="edu-degree" data-i18n="edu2-deg">UX/UI Design — Cursos especializados</div>
+          <div class="edu-school" data-i18n="edu2-school">Formación continua</div>
+          <div class="edu-desc" data-i18n="edu2-desc">Figma, design systems, prototipado de alta fidelidad y evaluación de usabilidad.</div>
         </div>
       </div>
     </div>
-    <p class="section-label" style="margin-top:1.5rem">Idiomas</p>
+    <p class="section-label" style="margin-top:1.5rem"><span data-i18n="lang-section">Idiomas</span></p>
     <div class="lang-grid">
       <div class="lang-item">
-        <span class="lang-name">Español</span>
+        <span class="lang-name" data-i18n="lang-es">Español</span>
         <div class="lang-track"><div class="lang-fill" data-width="100%"></div></div>
-        <span class="lang-lv">Nativo</span>
+        <span class="lang-lv" data-i18n="lang-es-lv">Nativo</span>
       </div>
       <div class="lang-item">
-        <span class="lang-name">Inglés</span>
+        <span class="lang-name" data-i18n="lang-en">Inglés</span>
         <div class="lang-track"><div class="lang-fill" data-width="88%"></div></div>
-        <span class="lang-lv">C1 Avanzado</span>
+        <span class="lang-lv" data-i18n="lang-en-lv">C1 Avanzado</span>
       </div>
     </div>
   </div>
 
   <!-- SLIDE 7: CONTACTO -->
-  <div class="slide" id="slide-contacto" data-label="Contacto">
+  <div class="slide" id="slide-contacto" data-label-es="Contacto" data-label-en="Contact" data-label="Contacto">
     <div class="foot-name">Matias<br><span style="color:var(--accent)">Pedreira.</span></div>
     <div class="foot-tag">Full Stack Developer · Buenos Aires, AR</div>
 
-    <!-- CURRENTLY WORKING AT: KREA -->
     <div class="working-at">
-      <span class="working-at-label">Actualmente trabajando en</span>
+      <span class="working-at-label" data-i18n="working-at">Actualmente trabajando en</span>
       <div class="krea-badge">
+        <img src="krea.png" alt="Krea" class="krea-badge-img">
         <span class="krea-badge-plus">+</span>
         <span class="krea-badge-name">Krea</span>
       </div>
     </div>
 
-    <!-- BLURRED CONTACT LINKS -->
+    <!-- ALL BLURRED CONTACT LINKS -->
     <div class="foot-links">
       <div class="foot-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
         <span class="contact-private">matias.pedreira@gmail.com</span>
-        <span class="contact-lock">🔒 privado</span>
+        <span class="contact-lock" data-i18n="contact-lock">🔒 privado</span>
       </div>
       <div class="foot-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.4 19.79 19.79 0 01.1 4.77 2 2 0 012.07 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 9.4a16 16 0 006.72 6.72l.83-.83a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
         <span class="contact-private">+54 9 11 5834-2917</span>
-        <span class="contact-lock">🔒 privado</span>
+        <span class="contact-lock" data-i18n="contact-lock2">🔒 privado</span>
       </div>
-      <a class="foot-link" href="https://linkedin.com/in/tunombre" target="_blank" rel="noopener">
+      <div class="foot-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-        LinkedIn →
-      </a>
-      <a class="foot-link" href="https://github.com/tunombre" target="_blank" rel="noopener">
+        <span class="contact-private">linkedin.com/in/matias-pedreira</span>
+        <span class="contact-lock" data-i18n="contact-lock3">🔒 privado</span>
+      </div>
+      <div class="foot-link">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
-        GitHub →
-      </a>
+        <span class="contact-private">github.com/matiaspedreira</span>
+        <span class="contact-lock" data-i18n="contact-lock4">🔒 privado</span>
+      </div>
     </div>
 
-    <!-- BACK TO TOP -->
     <button class="btn-top" onclick="goToSlide(0)">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-      volver al inicio
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+      <span data-i18n="btn-top">volver al inicio</span>
     </button>
   </div>
 
 </div>
 
-<!-- SWIPE RIGHT HINT (exp slide bottom) -->
+<!-- SWIPE RIGHT HINT -->
 <div class="exp-swipe-right" id="expSwipeRight">
-  <span class="exp-swipe-right-label">siguiente slide</span>
+  <span class="exp-swipe-right-label" data-i18n="next-slide">siguiente slide</span>
   <div class="exp-sr-arrows"><span></span><span></span><span></span></div>
 </div>
 
@@ -1039,18 +1063,302 @@ nav{
 </div>
 
 <script>
-const wrap = document.getElementById('slidesWrap');
-const slides = Array.from(document.querySelectorAll('.slide'));
-const dotsContainer = document.getElementById('navDots');
-const btnPrev = document.getElementById('btnPrev');
-const btnNext = document.getElementById('btnNext');
-const progFill = document.getElementById('progFill');
-const progLabel = document.getElementById('progLabel');
-const progCur = document.getElementById('progCur');
-const expSwipeRight = document.getElementById('expSwipeRight');
-const scrollDownHint = document.getElementById('scrollDownHint');
-const total = slides.length;
-let current = 0;
+/* ─────────────────────────────────────────────
+   CANVAS BACKGROUND — animated halftone waves
+───────────────────────────────────────────── */
+(function(){
+  const canvas = document.getElementById('bgCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize(){
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const SPACING = 28;
+  let t = 0;
+
+  // Short-path hue lerp
+  function lerpHue(h0, h1, f){
+    let d = h1 - h0;
+    if(d > 180) d -= 360;
+    if(d < -180) d += 360;
+    return ((h0 + d * f) % 360 + 360) % 360;
+  }
+
+  // Color gradient: yellow → orange → pink → purple → blue
+  const stops = [
+    [0,    40],   // yellow
+    [0.20, 18],   // orange
+    [0.42, 330],  // pink-magenta
+    [0.68, 270],  // purple
+    [1.00, 228]   // blue-indigo
+  ];
+
+  function getHue(pos){
+    for(let i = 0; i < stops.length - 1; i++){
+      const [t0, h0] = stops[i];
+      const [t1, h1] = stops[i+1];
+      if(pos >= t0 && pos <= t1){
+        return lerpHue(h0, h1, (pos - t0)/(t1 - t0));
+      }
+    }
+    return 228;
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const cols = Math.ceil(canvas.width  / SPACING) + 2;
+    const rows = Math.ceil(canvas.height / SPACING) + 2;
+
+    for(let r = 0; r <= rows; r++){
+      for(let c = 0; c <= cols; c++){
+        const x = c * SPACING;
+        const y = r * SPACING;
+
+        // Layered slow waves
+        const w1 = Math.sin(c * 0.18 + t * 0.28);
+        const w2 = Math.cos(r * 0.14 + t * 0.22);
+        const w3 = Math.sin((c * 0.1 + r * 0.1) + t * 0.35);
+        const wave = (w1 + w2 + w3) / 3;   // −1..1
+        const norm = (wave + 1) / 2;         // 0..1
+
+        const radius = norm * 7.5 + 0.4;
+
+        // Diagonal position + wave offsets color
+        const xn = c / cols;
+        const yn = r / rows;
+        const colorPos = ((xn * 0.55 + yn * 0.35 + norm * 0.12 + t * 0.018) % 1 + 1) % 1;
+        const hue = getHue(colorPos);
+
+        const alpha = 0.28 + norm * 0.22;
+
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${hue.toFixed(0)},100%,58%,${alpha.toFixed(2)})`;
+        ctx.fill();
+      }
+    }
+
+    t += 0.006;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ─────────────────────────────────────────────
+   TRANSLATIONS
+───────────────────────────────────────────── */
+const T = {
+  es: {
+    'hero-sub':    'Full Stack Developer &amp; Tech Lead',
+    'hero-bio':    'Desarrollador full stack con <strong>enfoque integral</strong>: desde servidores y bases de datos hasta la experiencia del usuario final. <strong>Autónomo, proactivo y orientado a resultados.</strong> Especializado en digitalizar y optimizar procesos de negocios — incluyendo <em>logística, turismo y aviación</em>.',
+    'cta-exp':     'Ver experiencia →',
+    'hero-loc':    'Buenos Aires, Argentina · 24 años',
+    'swipe-label': 'deslizá para explorar',
+    's2-label':    '01 &nbsp;Sobre mí',
+    's2-title':    'Código, diseño<br>y negocio.',
+    's2-p1':       'Soy desarrollador full stack con <strong>capacidad de llevar proyectos de principio a fin sin supervisión constante</strong>. Entiendo el stack completo: arquitectura de servidores, modelos de datos y la interfaz que ve el usuario final.',
+    's2-p2':       'Mi paso por <strong>Despegar.com</strong> me dio escala real: sistemas críticos con millones de transacciones en viajes y aviación. Esa experiencia moldeó cómo pienso la <em>confiabilidad, la performance y la digitalización de procesos complejos</em>.',
+    's2-p3':       'Hoy en <span class="krea-text"><span class="krea-plus">+</span>Krea</span> opero como Tech Lead, tomando requerimientos y entregando productos completos. En paralelo, trabajo con empresas tradicionales que necesitan dar el salto digital.',
+    'stat-exp':    'Años exp.',
+    'stat-aut':    'Autonomía',
+    'stat-cert':   'Certificaciones',
+    'stat-lang':   'Inglés',
+    's3-label':    '02 &nbsp;Experiencia',
+    's3-title':    'Trayectoria<br>profesional.',
+    'job1-role':   'Prácticas Profesionales Supervisadas',
+    'job1-desc':   '<em style="color:var(--accent);font-style:normal">Prácticas en el marco de la carrera de Analista de Sistemas</em> de Computación. Aplicación de conocimientos técnicos en entornos reales bajo supervisión académica.',
+    'job1-b1':     '<em>Trainee durante todo 2021</em> con incorporación a proyectos reales desde el primer día.',
+    'job2-role':   'Junior Frontend Developer',
+    'job2-desc':   '<strong>Exposición directa a sistemas de alto tráfico</strong> con millones de usuarios activos en Argentina y la región.',
+    'job2-b1':     'Desarrollo de interfaces de búsqueda y reserva de vuelos y hoteles.',
+    'job2-b2':     'Equipos ágiles con ciclos de entrega continuos (CI/CD).',
+    'job2-b3':     '<em>Trainee en el segundo semestre de 2021; rol formal desde 2022.</em>',
+    'job3-company':'Desarrollo Freelance',
+    'job3-role':   'Full Stack Developer Independiente',
+    'job3-desc':   '<em style="color:var(--accent);font-style:normal">Trabajo con empresas y emprendimientos</em> que buscan <strong>digitalizar operaciones y optimizar procesos internos</strong>. Partner oficial de <strong style="color:var(--text)">Tiendanube</strong>, colaborando en el ecosistema de e-commerce para la región.',
+    'job3-b1':     'Tracking y optimización logística en tiempo real.',
+    'job3-b2':     'Plataformas de digitalización para negocios con alta dependencia de procesos manuales.',
+    'job3-b3':     'Consultoría en arquitectura para startups en etapas tempranas.',
+    'job3-b4':     '<em>Partner oficial de Tiendanube</em> — desarrollo e integración de tiendas en el ecosistema de la plataforma.',
+    'badge-today': 'hoy',
+    'job4-role':   'Full Stack Developer Semi-Sr. / Tech Lead',
+    'job4-desc':   'Rol de referencia técnica. <strong>Gestión integral</strong>: de requerimientos hasta producción.',
+    'job4-b1':     'Sitios institucionales, e-commerce y aplicaciones web a medida.',
+    'job4-b2':     'Arquitectura de servidores y modelos de base de datos.',
+    'job4-b3':     'Operación <strong>100% autónoma</strong>, sin supervisión técnica.',
+    'scroll-hint': 'scroll',
+    's4-label':    '03 &nbsp;Habilidades',
+    's4-title':    'Stack técnico<br>completo.',
+    'sk1-title':   'Interfaces',
+    'sk1-sub':     'Web moderna y apps',
+    'sk2-title':   'Servidores &amp; APIs',
+    'sk2-sub':     'Back-end y servicios',
+    'sk3-title':   'Datos &amp; Cloud',
+    'sk3-sub':     'DB, infra y DevOps',
+    'sk4-title':   'Diseño &amp; UX',
+    'sk4-sub':     'UI centrada en el usuario',
+    's5-label':    '04 &nbsp;Certificaciones',
+    's5-title':    'Credenciales<br>verificadas.',
+    'cert1-name':  'Google Analytics Certification',
+    'cert1-desc':  'Medición web, audiencias, seguimiento de conversiones y reporting para decisiones de negocio.',
+    'cert2-name':  'UX Design Professional Certificate',
+    'cert2-desc':  'Diseño centrado en el usuario, prototipado en Figma e investigación de usuarios.',
+    'cert3-name':  'Desarrollo Web Avanzado',
+    'cert3-desc':  'Arquitectura de aplicaciones modernas, performance, seguridad y buenas prácticas full stack.',
+    'cert-verified':'Certificado verificado',
+    'cert-verified2':'Certificado verificado',
+    'cert-verified3':'Certificado verificado',
+    's6-label':    '05 &nbsp;Educación',
+    's6-title':    'Formación<br>académica.',
+    'edu1-deg':    'Analista de Sistemas de Computación',
+    'edu1-desc':   'Formación sólida en algoritmos, arquitectura de software, bases de datos, redes y gestión de proyectos. Egresado con prácticas profesionales completadas.',
+    'edu2-deg':    'UX/UI Design — Cursos especializados',
+    'edu2-school': 'Formación continua',
+    'edu2-desc':   'Figma, design systems, prototipado de alta fidelidad y evaluación de usabilidad.',
+    'lang-section':'Idiomas',
+    'lang-es':     'Español',
+    'lang-es-lv':  'Nativo',
+    'lang-en':     'Inglés',
+    'lang-en-lv':  'C1 Avanzado',
+    'working-at':  'Actualmente trabajando en',
+    'contact-lock':'🔒 privado',
+    'contact-lock2':'🔒 privado',
+    'contact-lock3':'🔒 privado',
+    'contact-lock4':'🔒 privado',
+    'btn-top':     'volver al inicio',
+    'next-slide':  'siguiente slide',
+  },
+  en: {
+    'hero-sub':    'Full Stack Developer &amp; Tech Lead',
+    'hero-bio':    'Full stack developer with a <strong>comprehensive approach</strong>: from servers and databases to the end-user experience. <strong>Autonomous, proactive, and results-driven.</strong> Specialized in digitalizing and optimizing business processes — including <em>logistics, tourism, and aviation</em>.',
+    'cta-exp':     'View experience →',
+    'hero-loc':    'Buenos Aires, Argentina · 24 years old',
+    'swipe-label': 'swipe to explore',
+    's2-label':    '01 &nbsp;About me',
+    's2-title':    'Code, design<br>and business.',
+    's2-p1':       'I\'m a full stack developer with the <strong>ability to take projects from start to finish without constant supervision</strong>. I understand the complete stack: server architecture, data models, and the interface the end user sees.',
+    's2-p2':       'My time at <strong>Despegar.com</strong> gave me real scale: critical systems handling millions of travel and aviation transactions. That experience shaped how I think about <em>reliability, performance, and the digitalization of complex processes</em>.',
+    's2-p3':       'Today at <span class="krea-text"><span class="krea-plus">+</span>Krea</span> I operate as Tech Lead, taking requirements and delivering complete products. In parallel, I work with traditional businesses that need to make the digital leap.',
+    'stat-exp':    'Yrs exp.',
+    'stat-aut':    'Autonomy',
+    'stat-cert':   'Certifications',
+    'stat-lang':   'English',
+    's3-label':    '02 &nbsp;Experience',
+    's3-title':    'Professional<br>trajectory.',
+    'job1-role':   'Supervised Professional Internship',
+    'job1-desc':   '<em style="color:var(--accent);font-style:normal">Internship as part of the Computer Systems Analyst degree</em>. Application of technical knowledge in real environments under academic supervision.',
+    'job1-b1':     '<em>Trainee throughout all of 2021</em>, integrated into real projects from day one.',
+    'job2-role':   'Junior Frontend Developer',
+    'job2-desc':   '<strong>Direct exposure to high-traffic systems</strong> with millions of active users across Argentina and the region.',
+    'job2-b1':     'Development of flight and hotel search and booking interfaces.',
+    'job2-b2':     'Agile teams with continuous delivery cycles (CI/CD).',
+    'job2-b3':     '<em>Trainee in the second half of 2021; formal role from 2022.</em>',
+    'job3-company':'Freelance Development',
+    'job3-role':   'Independent Full Stack Developer',
+    'job3-desc':   '<em style="color:var(--accent);font-style:normal">Working with companies and startups</em> looking to <strong>digitalize operations and optimize internal processes</strong>. Official partner of <strong style="color:var(--text)">Tiendanube</strong>, collaborating in the e-commerce ecosystem for the region.',
+    'job3-b1':     'Real-time logistics tracking and optimization.',
+    'job3-b2':     'Digitalization platforms for businesses heavily reliant on manual processes.',
+    'job3-b3':     'Architecture consulting for early-stage startups.',
+    'job3-b4':     '<em>Official Tiendanube Partner</em> — development and integration of stores within the platform ecosystem.',
+    'badge-today': 'today',
+    'job4-role':   'Full Stack Developer Semi-Sr. / Tech Lead',
+    'job4-desc':   'Technical reference role. <strong>Full ownership</strong>: from requirements to production.',
+    'job4-b1':     'Institutional sites, e-commerce, and custom web applications.',
+    'job4-b2':     'Server architecture and database modeling.',
+    'job4-b3':     '<strong>100% autonomous</strong> operation, no technical supervision.',
+    'scroll-hint': 'scroll',
+    's4-label':    '03 &nbsp;Skills',
+    's4-title':    'Complete<br>tech stack.',
+    'sk1-title':   'Interfaces',
+    'sk1-sub':     'Modern web & apps',
+    'sk2-title':   'Servers &amp; APIs',
+    'sk2-sub':     'Back-end & services',
+    'sk3-title':   'Data &amp; Cloud',
+    'sk3-sub':     'DB, infra & DevOps',
+    'sk4-title':   'Design &amp; UX',
+    'sk4-sub':     'User-centered UI',
+    's5-label':    '04 &nbsp;Certifications',
+    's5-title':    'Verified<br>credentials.',
+    'cert1-name':  'Google Analytics Certification',
+    'cert1-desc':  'Web measurement, audiences, conversion tracking, and reporting for business decisions.',
+    'cert2-name':  'UX Design Professional Certificate',
+    'cert2-desc':  'User-centered design, Figma prototyping, and user research.',
+    'cert3-name':  'Advanced Web Development',
+    'cert3-desc':  'Modern application architecture, performance, security, and full stack best practices.',
+    'cert-verified':'Verified certificate',
+    'cert-verified2':'Verified certificate',
+    'cert-verified3':'Verified certificate',
+    's6-label':    '05 &nbsp;Education',
+    's6-title':    'Academic<br>background.',
+    'edu1-deg':    'Computer Systems Analyst',
+    'edu1-desc':   'Solid foundation in algorithms, software architecture, databases, networking, and project management. Graduated with completed professional internship.',
+    'edu2-deg':    'UX/UI Design — Specialized Courses',
+    'edu2-school': 'Continuing education',
+    'edu2-desc':   'Figma, design systems, high-fidelity prototyping, and usability evaluation.',
+    'lang-section':'Languages',
+    'lang-es':     'Spanish',
+    'lang-es-lv':  'Native',
+    'lang-en':     'English',
+    'lang-en-lv':  'C1 Advanced',
+    'working-at':  'Currently working at',
+    'contact-lock':'🔒 private',
+    'contact-lock2':'🔒 private',
+    'contact-lock3':'🔒 private',
+    'contact-lock4':'🔒 private',
+    'btn-top':     'back to top',
+    'next-slide':  'next slide',
+  }
+};
+
+let currentLang = 'es';
+
+function applyTranslations(lang){
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if(T[lang] && T[lang][key] !== undefined){
+      el.innerHTML = T[lang][key];
+    }
+  });
+  // Update nav dot labels
+  slides.forEach((s, i) => {
+    const lbl = s.getAttribute('data-label-' + lang) || s.getAttribute('data-label');
+    s.setAttribute('data-label', lbl);
+    const dot = dotsContainer.querySelectorAll('.nav-dot')[i];
+    if(dot){ dot.setAttribute('aria-label', lbl); dot.title = lbl; }
+  });
+  // Update progress label for current slide
+  progLabel.textContent = slides[current].getAttribute('data-label');
+}
+
+function toggleLang(){
+  currentLang = currentLang === 'es' ? 'en' : 'es';
+  document.getElementById('langFlag').textContent = currentLang === 'es' ? '🇬🇧' : '🇦🇷';
+  document.getElementById('langCode').textContent = currentLang === 'es' ? 'EN' : 'ES';
+  applyTranslations(currentLang);
+}
+window.toggleLang = toggleLang;
+
+/* ─────────────────────────────────────────────
+   SLIDES ENGINE
+───────────────────────────────────────────── */
+const wrap         = document.getElementById('slidesWrap');
+const slides       = Array.from(document.querySelectorAll('.slide'));
+const dotsContainer= document.getElementById('navDots');
+const btnPrev      = document.getElementById('btnPrev');
+const btnNext      = document.getElementById('btnNext');
+const progFill     = document.getElementById('progFill');
+const progLabel    = document.getElementById('progLabel');
+const progCur      = document.getElementById('progCur');
+const expSwipeRight= document.getElementById('expSwipeRight');
+const scrollDownHint=document.getElementById('scrollDownHint');
+const langBtn      = document.getElementById('langBtn');
+const total        = slides.length;
+let current        = 0;
 
 // Build nav dots
 slides.forEach((s, i) => {
@@ -1062,21 +1370,20 @@ slides.forEach((s, i) => {
   dotsContainer.appendChild(dot);
 });
 
-function pad(n) { return String(n).padStart(2, '0'); }
+function pad(n){ return String(n).padStart(2,'0'); }
 
-function updateUI(idx) {
+function updateUI(idx){
   current = idx;
   const dots = dotsContainer.querySelectorAll('.nav-dot');
   dots.forEach((d, i) => d.classList.toggle('active', i === idx));
   btnPrev.disabled = idx === 0;
   btnNext.disabled = idx === total - 1;
-  const pct = ((idx + 1) / total * 100).toFixed(1);
-  progFill.style.width = pct + '%';
-  progLabel.textContent = slides[idx].dataset.label;
-  progCur.textContent = pad(idx + 1);
+  progFill.style.width = ((idx + 1) / total * 100).toFixed(1) + '%';
+  progLabel.textContent = slides[idx].getAttribute('data-label');
+  progCur.textContent   = pad(idx + 1);
 
-  // trigger lang bars on edu slide
-  if (slides[idx].id === 'slide-edu') {
+  // Trigger lang bars on edu slide
+  if(slides[idx].id === 'slide-edu'){
     setTimeout(() => {
       slides[idx].querySelectorAll('.lang-fill').forEach(f => {
         f.style.width = f.dataset.width;
@@ -1084,20 +1391,28 @@ function updateUI(idx) {
     }, 300);
   }
 
-  // Hide exp swipe right when leaving exp slide
-  if (slides[idx].id !== 'slide-exp') {
+  // Hide exp swipe hint when leaving
+  if(slides[idx].id !== 'slide-exp'){
     expSwipeRight.classList.remove('visible');
+  }
+
+  // Show/hide lang button only on hero slide
+  if(idx === 0){
+    langBtn.classList.add('visible');
+  } else {
+    langBtn.classList.remove('visible');
   }
 }
 
-function goToSlide(idx) {
+function goToSlide(idx){
   wrap.scrollTo({ left: idx * window.innerWidth, behavior: 'smooth' });
   updateUI(idx);
 }
 window.goToSlide = goToSlide;
 
-btnPrev.addEventListener('click', () => { if (current > 0) goToSlide(current - 1); });
-btnNext.addEventListener('click', () => { if (current < total - 1) goToSlide(current + 1); });
+btnPrev.addEventListener('click', () => { if(current > 0) goToSlide(current - 1); });
+btnNext.addEventListener('click', () => { if(current < total - 1) goToSlide(current + 1); });
+langBtn.addEventListener('click', toggleLang);
 
 // Scroll sync
 let scrollTimer;
@@ -1105,27 +1420,22 @@ wrap.addEventListener('scroll', () => {
   clearTimeout(scrollTimer);
   scrollTimer = setTimeout(() => {
     const idx = Math.round(wrap.scrollLeft / window.innerWidth);
-    if (idx !== current) updateUI(idx);
+    if(idx !== current) updateUI(idx);
   }, 80);
 });
 
-// Experience slide: scroll-down hint + swipe-right nudge
+// Experience slide: scroll hints
 const expSlide = document.getElementById('slide-exp');
-let swipeNudgeShown = false;
 let swipeNudgeTimer;
 
 expSlide.addEventListener('scroll', () => {
   const remaining = expSlide.scrollHeight - expSlide.clientHeight - expSlide.scrollTop;
-
-  // Hide scroll-down hint when user has scrolled
-  if (expSlide.scrollTop > 40) {
+  if(expSlide.scrollTop > 40){
     scrollDownHint.classList.add('hidden');
   } else {
     scrollDownHint.classList.remove('hidden');
   }
-
-  // Show swipe-right nudge when near bottom
-  if (remaining < 60 && current === 2) {
+  if(remaining < 60 && current === 2){
     expSwipeRight.classList.add('visible');
     clearTimeout(swipeNudgeTimer);
     swipeNudgeTimer = setTimeout(() => {
@@ -1134,10 +1444,10 @@ expSlide.addEventListener('scroll', () => {
   }
 });
 
-// Keyboard navigation
+// Keyboard nav
 document.addEventListener('keydown', e => {
-  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { if (current < total-1) goToSlide(current+1); }
-  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { if (current > 0) goToSlide(current-1); }
+  if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ if(current < total-1) goToSlide(current+1); }
+  if(e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  { if(current > 0)       goToSlide(current-1); }
 });
 
 updateUI(0);
