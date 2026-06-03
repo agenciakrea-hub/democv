@@ -21,8 +21,8 @@ ul{list-style:none}
   --border:rgba(255,255,255,0.06);
   --border-2:rgba(255,255,255,0.13);
   --text:#dce4f5;
-  --muted:#50597a;
-  --soft:#8892b0;
+  --muted:#7a87a8;
+  --soft:#a0aabf;
   --accent:#5bf4b5;
   --accent-dim:rgba(91,244,181,0.09);
   --orange:#ff8c42;
@@ -66,6 +66,7 @@ html,body{
   flex:0 0 100vw;
   height:calc(100dvh - var(--nav) - 48px);
   scroll-snap-align:start;
+  scroll-snap-stop:always;
   overflow-y:auto;overflow-x:hidden;
   scrollbar-width:thin;
   scrollbar-color:var(--surface-3) transparent;
@@ -111,21 +112,19 @@ nav{
   top:calc(var(--nav) + 14px);
   right:clamp(.9rem,4vw,2rem);
   z-index:300;
-  width:46px;height:46px;
+  width:52px;height:40px;
   border-radius:10px;
   background:rgba(17,20,30,.85);
   border:1.5px solid var(--border-2);
   color:var(--text);
   font-family:'Space Mono',monospace;
-  font-size:.6rem;font-weight:700;
-  letter-spacing:1.5px;
+  font-size:.7rem;font-weight:700;
+  letter-spacing:2px;
   cursor:pointer;
   display:none;
   align-items:center;justify-content:center;
   transition:border-color var(--t),color var(--t),background var(--t),transform var(--t),box-shadow var(--t);
   backdrop-filter:blur(12px);
-  flex-direction:column;
-  gap:1px;
   box-shadow:0 4px 20px rgba(0,0,0,.4);
   opacity:0;
   pointer-events:none;
@@ -140,8 +139,6 @@ nav{
   transform:translateY(-2px);
   box-shadow:0 6px 24px rgba(91,244,181,.15);
 }
-#langBtn .lang-flag{ font-size:.85rem;line-height:1; }
-#langBtn .lang-code{ font-size:.55rem;letter-spacing:2px; }
 
 /* ─ PREMIUM ARROWS ─ */
 .nav-arrows{display:flex;gap:8px;flex-shrink:0;align-items:center}
@@ -175,7 +172,7 @@ nav{
   padding:0 var(--pad);
 }
 .prog-label{
-  font-family:'Space Mono',monospace;font-size:.68rem;
+  font-family:'Space Mono',monospace;font-size:.8rem;
   color:var(--text);letter-spacing:2px;text-transform:uppercase;
   min-width:80px;font-weight:700;
 }
@@ -208,7 +205,7 @@ nav{
 
 /* ─ SECTION LABELS ─ */
 .section-label{
-  font-family:'Space Mono',monospace;font-size:.63rem;
+  font-family:'Space Mono',monospace;font-size:.7rem;
   color:var(--accent);letter-spacing:3px;text-transform:uppercase;
   margin-bottom:.5rem;
   display:flex;align-items:center;gap:8px;
@@ -223,8 +220,8 @@ nav{
 
 /* ─ CHIP ─ */
 .chip{
-  font-family:'Space Mono',monospace;font-size:.63rem;
-  padding:3px 10px;border-radius:5px;
+  font-family:'Space Mono',monospace;font-size:.7rem;
+  padding:4px 12px;border-radius:5px;
   border:1px solid var(--border-2);background:var(--surface);
   color:var(--soft);white-space:nowrap;
 }
@@ -232,17 +229,17 @@ nav{
 
 /* ─ BTN ─ */
 .btn-p{
-  padding:.6rem 1.4rem;border-radius:10px;
+  padding:.75rem 1.8rem;border-radius:10px;
   background:var(--accent);color:#0a0c13;
-  font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;
   display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:none;
   transition:opacity var(--t),transform var(--t);
 }
 .btn-p:hover{opacity:.85;transform:translateY(-2px)}
 .btn-g{
-  padding:.6rem 1.4rem;border-radius:10px;
+  padding:.75rem 1.8rem;border-radius:10px;
   border:1px solid var(--border-2);background:transparent;color:var(--text);
-  font-family:'Syne',sans-serif;font-weight:600;font-size:.85rem;
+  font-family:'Syne',sans-serif;font-weight:600;font-size:1rem;
   display:inline-flex;align-items:center;gap:8px;cursor:pointer;
   transition:border-color var(--t),color var(--t),transform var(--t);
 }
@@ -285,21 +282,21 @@ nav{
 .hero-sub{
   display:flex;align-items:center;gap:10px;
   font-family:'Space Mono',monospace;
-  font-size:clamp(.65rem,2vw,.8rem);
-  color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
+  font-size:clamp(.72rem,2vw,.9rem);
+  color:var(--soft);letter-spacing:1.5px;text-transform:uppercase;
   margin-bottom:1rem;
   animation:fadeUp .7s .2s both ease;
 }
-.hero-sub::before{content:'';flex:0 0 24px;height:1px;background:var(--muted)}
+.hero-sub::before{content:'';flex:0 0 24px;height:1px;background:var(--soft)}
 .hero-bio{
-  max-width:540px;font-size:clamp(.85rem,2vw,1rem);font-weight:300;
-  color:var(--soft);line-height:1.8;margin-bottom:1.2rem;
+  max-width:560px;font-size:clamp(1rem,2.5vw,1.15rem);font-weight:300;
+  color:var(--soft);line-height:1.85;margin-bottom:1.2rem;
   animation:fadeUp .7s .3s both ease;
 }
 .hero-bio strong{color:var(--text);font-weight:600}
 .hero-bio em{color:var(--accent);font-style:normal}
 .hero-stack{
-  display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.5rem;
+  display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem;
   animation:fadeUp .7s .4s both ease;
 }
 .hero-cta{
@@ -308,8 +305,8 @@ nav{
 }
 .loc{
   display:inline-flex;align-items:center;gap:6px;
-  font-family:'Space Mono',monospace;font-size:.65rem;
-  color:var(--muted);margin-top:.8rem;
+  font-family:'Space Mono',monospace;font-size:.82rem;
+  color:var(--soft);margin-top:.8rem;
   animation:fadeUp .7s .6s both ease;
 }
 
@@ -378,7 +375,7 @@ nav{
   50%{opacity:1}
 }
 .swipe-cta-label{
-  font-family:'Space Mono',monospace;font-size:.7rem;
+  font-family:'Space Mono',monospace;font-size:.78rem;
   letter-spacing:2px;text-transform:uppercase;
   color:var(--accent);font-weight:700;
 }
@@ -394,16 +391,16 @@ nav{
 .scroll-down-hint.hidden{opacity:0}
 .scroll-d-inner{
   display:flex;align-items:center;gap:6px;
-  font-family:'Space Mono',monospace;font-size:.58rem;
-  color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;
+  font-family:'Space Mono',monospace;font-size:.72rem;
+  color:var(--soft);letter-spacing:1.5px;text-transform:uppercase;
 }
 .scroll-d-arrow{
   display:flex;flex-direction:column;gap:2px;align-items:center;
 }
 .scroll-d-arrow span{
   display:block;width:7px;height:7px;
-  border-right:1.5px solid var(--muted);
-  border-bottom:1.5px solid var(--muted);
+  border-right:1.5px solid var(--soft);
+  border-bottom:1.5px solid var(--soft);
   transform:rotate(45deg);
   animation:scrollBounce 1.4s ease infinite;
 }
@@ -431,7 +428,7 @@ nav{
 }
 .exp-swipe-right.visible{opacity:1}
 .exp-swipe-right-label{
-  font-family:'Space Mono',monospace;font-size:.58rem;
+  font-family:'Space Mono',monospace;font-size:.68rem;
   color:var(--accent);letter-spacing:1.5px;text-transform:uppercase;
 }
 .exp-sr-arrows{display:flex;gap:3px}
@@ -453,7 +450,7 @@ nav{
 @media(min-width:600px){.about-grid{grid-template-columns:1.2fr 1fr;gap:3rem;align-items:start}}
 .about-text p{
   color:var(--soft);font-weight:300;line-height:1.85;
-  margin-bottom:.7rem;font-size:.9rem;
+  margin-bottom:.7rem;font-size:1rem;
 }
 .about-text p strong{color:var(--text);font-weight:600}
 .about-text p em{color:var(--accent);font-style:normal}
@@ -467,7 +464,7 @@ nav{
   font-family:'Syne',sans-serif;font-weight:800;
   font-size:1.9rem;color:var(--accent);line-height:1;margin-bottom:.25rem;
 }
-.stat-l{font-size:.63rem;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:.5px;text-transform:uppercase}
+.stat-l{font-size:.72rem;font-family:'Space Mono',monospace;color:var(--soft);letter-spacing:.5px;text-transform:uppercase}
 
 /* ─ EXPERIENCE SLIDE ─ */
 .exp-list{display:flex;flex-direction:column;gap:0}
@@ -499,8 +496,8 @@ nav{
 .badge-actual{
   display:inline-flex;align-items:center;gap:5px;
   background:rgba(202,255,0,.1);border:1px solid rgba(202,255,0,.25);
-  border-radius:100px;padding:1px 8px 1px 5px;
-  font-family:'Space Mono',monospace;font-size:.58rem;font-weight:700;
+  border-radius:100px;padding:2px 10px 2px 7px;
+  font-family:'Space Mono',monospace;font-size:.65rem;font-weight:700;
   color:var(--krea);letter-spacing:.5px;text-transform:uppercase;
   line-height:1.6;margin-top:2px;width:fit-content;
 }
@@ -526,37 +523,37 @@ nav{
 }
 .exp-company{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem}
 .exp-company .krea-text{font-size:.95rem}
-.exp-role{font-size:.7rem;color:var(--accent);font-family:'Space Mono',monospace;margin-bottom:.5rem;letter-spacing:.3px}
-.exp-desc{font-size:.83rem;color:var(--soft);font-weight:300;line-height:1.75;margin-bottom:.5rem}
+.exp-role{font-size:.78rem;color:var(--accent);font-family:'Space Mono',monospace;margin-bottom:.5rem;letter-spacing:.3px}
+.exp-desc{font-size:.95rem;color:var(--soft);font-weight:300;line-height:1.75;margin-bottom:.5rem}
 .exp-desc strong{color:var(--text);font-weight:500}
-.exp-bullets{display:flex;flex-direction:column;gap:3px;margin-bottom:.5rem}
+.exp-bullets{display:flex;flex-direction:column;gap:4px;margin-bottom:.5rem}
 .exp-bullets li{
-  font-size:.8rem;color:var(--soft);font-weight:300;
-  line-height:1.6;padding-left:1rem;position:relative;
+  font-size:.9rem;color:var(--soft);font-weight:300;
+  line-height:1.65;padding-left:1rem;position:relative;
 }
 .exp-bullets li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:700}
 .exp-bullets li em{color:var(--accent);font-style:normal;font-weight:500}
 .exp-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:.5rem}
 .exp-tag{
-  font-family:'Space Mono',monospace;font-size:.6rem;
-  padding:2px 8px;border-radius:4px;
-  background:var(--surface-2);border:1px solid var(--border);color:var(--muted);
+  font-family:'Space Mono',monospace;font-size:.65rem;
+  padding:3px 9px;border-radius:4px;
+  background:var(--surface-2);border:1px solid var(--border);color:var(--soft);
 }
 .tiendanube-tag{border-color:rgba(91,155,244,.4);color:#5b9bf4;background:rgba(91,155,244,.07)}
 
 /* ─ SKILLS SLIDE ─ */
 .skills-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
 @media(min-width:700px){.skills-grid{grid-template-columns:repeat(4,1fr)}}
-.sk-card{padding:1rem;border-radius:var(--r);background:var(--surface);border:1px solid var(--border);}
+.sk-card{padding:1.1rem;border-radius:var(--r);background:var(--surface);border:1px solid var(--border);}
 .sk-icon{width:34px;height:34px;border-radius:9px;margin-bottom:.7rem;display:flex;align-items:center;justify-content:center;}
 .sk-icon.a{background:var(--accent-dim)}
 .sk-icon.b{background:var(--indigo-dim)}
 .sk-icon.c{background:rgba(251,146,60,.1)}
 .sk-icon.d{background:rgba(251,191,36,.1)}
-.sk-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.82rem;margin-bottom:.15rem}
-.sk-sub{font-size:.68rem;color:var(--muted);font-family:'Space Mono',monospace;margin-bottom:.7rem;line-height:1.4}
+.sk-title{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;margin-bottom:.2rem}
+.sk-sub{font-size:.75rem;color:var(--soft);font-family:'Space Mono',monospace;margin-bottom:.7rem;line-height:1.4}
 .sk-tags{display:flex;flex-wrap:wrap;gap:3px}
-.sk-tag{font-family:'Space Mono',monospace;font-size:.6rem;padding:2px 7px;border-radius:4px;background:var(--surface-2);border:1px solid var(--border);color:var(--soft);}
+.sk-tag{font-family:'Space Mono',monospace;font-size:.65rem;padding:3px 8px;border-radius:4px;background:var(--surface-2);border:1px solid var(--border);color:var(--soft);}
 
 /* ─ CERTS SLIDE ─ */
 .cert-grid{display:grid;grid-template-columns:1fr;gap:8px;}
@@ -570,13 +567,13 @@ nav{
 .cert-card:hover{border-color:var(--border-2);transform:translateY(-3px)}
 .cert-logo{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
 .cert-logo img{width:100%;height:100%;object-fit:contain}
-.cert-issuer{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:1px}
-.cert-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.88rem;line-height:1.3}
-.cert-desc{font-size:.77rem;color:var(--soft);font-weight:300;line-height:1.65}
+.cert-issuer{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--soft);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:1px}
+.cert-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;line-height:1.3}
+.cert-desc{font-size:.88rem;color:var(--soft);font-weight:300;line-height:1.65}
 .cert-badge{
   display:inline-flex;align-items:center;gap:5px;
-  font-family:'Space Mono',monospace;font-size:.6rem;
-  padding:3px 10px;border-radius:100px;
+  font-family:'Space Mono',monospace;font-size:.65rem;
+  padding:4px 12px;border-radius:100px;
   background:var(--accent-dim);border:1px solid rgba(91,244,181,.2);
   color:var(--accent);width:fit-content;margin-top:auto;
 }
@@ -591,21 +588,21 @@ nav{
 @media(min-width:500px){
   .edu-card{display:grid;grid-template-columns:auto 1fr;gap:0 1.5rem;align-items:start}
 }
-.edu-year{font-family:'Space Mono',monospace;font-size:.65rem;color:var(--muted);white-space:nowrap;padding-top:3px;margin-bottom:.35rem;}
+.edu-year{font-family:'Space Mono',monospace;font-size:.72rem;color:var(--soft);white-space:nowrap;padding-top:3px;margin-bottom:.35rem;}
 @media(min-width:500px){.edu-year{margin-bottom:0}}
-.edu-degree{font-family:'Syne',sans-serif;font-weight:700;font-size:.9rem;margin-bottom:2px}
-.edu-school{font-size:.73rem;color:var(--accent);font-family:'Space Mono',monospace;margin-bottom:.4rem;letter-spacing:.2px}
-.edu-desc{font-size:.82rem;color:var(--soft);font-weight:300;line-height:1.65}
+.edu-degree{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:2px}
+.edu-school{font-size:.8rem;color:var(--accent);font-family:'Space Mono',monospace;margin-bottom:.4rem;letter-spacing:.2px}
+.edu-desc{font-size:.92rem;color:var(--soft);font-weight:300;line-height:1.65}
 .lang-grid{display:flex;flex-direction:column;gap:7px;max-width:500px;margin-top:1.2rem}
 .lang-item{
   display:flex;align-items:center;gap:12px;
-  padding:.65rem .9rem;border-radius:var(--rs);
+  padding:.75rem .9rem;border-radius:var(--rs);
   background:var(--surface);border:1px solid var(--border);
 }
-.lang-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.85rem;min-width:75px}
+.lang-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.92rem;min-width:75px}
 .lang-track{flex:1;height:3px;background:var(--surface-3);border-radius:2px;overflow:hidden}
 .lang-fill{height:100%;border-radius:2px;background:var(--accent);width:0;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
-.lang-lv{font-family:'Space Mono',monospace;font-size:.6rem;color:var(--muted);white-space:nowrap}
+.lang-lv{font-family:'Space Mono',monospace;font-size:.68rem;color:var(--soft);white-space:nowrap}
 
 /* ─ CONTACT SLIDE ─ */
 #slide-contacto{
@@ -613,14 +610,14 @@ nav{
   text-align:center;
 }
 .foot-name{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,8vw,4rem);letter-spacing:-2px;margin-bottom:.3rem}
-.foot-tag{font-family:'Space Mono',monospace;font-size:.7rem;color:var(--muted);letter-spacing:.8px;margin-bottom:1.2rem}
+.foot-tag{font-family:'Space Mono',monospace;font-size:.8rem;color:var(--soft);letter-spacing:.8px;margin-bottom:1.2rem}
 .working-at{
   display:flex;flex-direction:column;align-items:center;gap:.5rem;
   margin-bottom:1.5rem;
 }
 .working-at-label{
-  font-family:'Space Mono',monospace;font-size:.6rem;
-  color:var(--muted);letter-spacing:2px;text-transform:uppercase;
+  font-family:'Space Mono',monospace;font-size:.78rem;
+  color:var(--soft);letter-spacing:2px;text-transform:uppercase;
 }
 .krea-badge{
   display:inline-flex;align-items:center;
@@ -641,38 +638,38 @@ nav{
 }
 .foot-links{
   display:flex;flex-direction:column;gap:.65rem;align-items:center;
-  font-family:'Space Mono',monospace;font-size:.73rem;
-  width:100%;max-width:280px;
+  font-family:'Space Mono',monospace;font-size:.8rem;
+  width:100%;max-width:300px;
 }
 .foot-link{
-  color:var(--soft);padding:.5rem 1.2rem;border-radius:8px;
+  color:var(--soft);padding:.6rem 1.2rem;border-radius:8px;
   border:1px solid var(--border);
   display:flex;align-items:center;gap:8px;
   width:100%;justify-content:flex-start;
   position:relative;overflow:hidden;
 }
 .foot-link:hover{color:var(--accent);border-color:rgba(91,244,181,.3);background:var(--accent-dim)}
-.foot-link svg{flex-shrink:0;opacity:.5}
+.foot-link svg{flex-shrink:0;opacity:.6}
 .contact-private{
   filter:blur(5px) saturate(0);
   user-select:none;pointer-events:none;
-  font-size:.7rem;color:var(--text);flex:1;
+  font-size:.78rem;color:var(--text);flex:1;
 }
 .contact-lock{
-  margin-left:auto;font-size:.55rem;color:var(--muted);
-  font-family:'Space Mono',monospace;letter-spacing:1px;opacity:.6;
+  margin-left:auto;font-size:.65rem;color:var(--soft);
+  font-family:'Space Mono',monospace;letter-spacing:1px;opacity:.9;
 }
 
-/* ─ BACK TO TOP — more visible ─ */
+/* ─ BACK TO TOP ─ */
 .btn-top{
   margin-top:1.6rem;
   display:inline-flex;align-items:center;gap:10px;
-  font-family:'Space Mono',monospace;font-size:.65rem;
+  font-family:'Space Mono',monospace;font-size:.78rem;
   color:var(--soft);letter-spacing:2px;text-transform:uppercase;
   border:1.5px solid var(--border-2);
   background:var(--surface);
   cursor:pointer;
-  padding:.65rem 1.4rem;border-radius:10px;
+  padding:.75rem 1.6rem;border-radius:10px;
   transition:color var(--t),border-color var(--t),background var(--t),transform var(--t);
   font-weight:700;
 }
@@ -695,8 +692,7 @@ nav{
 
 <!-- LANG BUTTON (hero only) -->
 <button id="langBtn" aria-label="Switch language">
-  <span class="lang-flag" id="langFlag">🇬🇧</span>
-  <span class="lang-code" id="langCode">EN</span>
+  <span id="langCode">EN</span>
 </button>
 
 <!-- NAV -->
@@ -733,7 +729,7 @@ nav{
         Desarrollador full stack con <strong>enfoque integral</strong>: desde servidores y bases de datos hasta la experiencia del usuario final.
         <strong>Autónomo, proactivo y orientado a resultados.</strong>
         Especializado en digitalizar y optimizar procesos de negocios —
-        incluyendo <em>logística, turismo y aviación</em>.
+        incluyendo <em>logística, envíos, turismo y aviación</em>.
       </p>
       <div class="hero-stack">
         <span class="chip hi">React</span>
@@ -748,8 +744,8 @@ nav{
         <button class="btn-p" onclick="goToSlide(2)" data-i18n="cta-exp">Ver experiencia →</button>
       </div>
       <p class="loc">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span data-i18n="hero-loc">Buenos Aires, Argentina · 24 años</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span data-i18n="hero-loc">Buenos Aires, Argentina · 28 años</span>
       </p>
     </div>
 
@@ -865,13 +861,12 @@ nav{
         <div class="exp-date">
           <span class="yr">2025</span>
           <span class="yr-sep">──────</span>
-          <span class="badge-actual" data-i18n="badge-today">hoy</span>
+          <span class="badge-actual" data-i18n="badge-today">actualmente</span>
         </div>
         <div>
           <div class="exp-header">
-            <!-- KREA LOGO FROM REPO -->
             <div class="exp-logo krea-logo-cell">
-              <img src="krea.png" alt="Krea" style="width:100%;height:100%;object-fit:contain">
+              <img src="Krea.png" alt="Krea" style="width:100%;height:100%;object-fit:contain">
             </div>
             <div class="exp-company"><span class="krea-text"><span class="krea-plus">+</span>Krea</span></div>
           </div>
@@ -890,7 +885,7 @@ nav{
 
     <div class="scroll-down-hint" id="scrollDownHint">
       <div class="scroll-d-inner">
-        <span data-i18n="scroll-hint">scroll</span>
+        <span data-i18n="scroll-hint">deslizá</span>
         <div class="scroll-d-arrow">
           <span></span><span></span><span></span>
         </div>
@@ -1007,31 +1002,30 @@ nav{
     <div class="working-at">
       <span class="working-at-label" data-i18n="working-at">Actualmente trabajando en</span>
       <div class="krea-badge">
-        <img src="krea.png" alt="Krea" class="krea-badge-img">
+        <img src="Krea.png" alt="Krea" class="krea-badge-img">
         <span class="krea-badge-plus">+</span>
         <span class="krea-badge-name">Krea</span>
       </div>
     </div>
 
-    <!-- ALL BLURRED CONTACT LINKS -->
     <div class="foot-links">
       <div class="foot-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 01-2.06 0L2 7"/></svg>
         <span class="contact-private">matias.pedreira@gmail.com</span>
         <span class="contact-lock" data-i18n="contact-lock">🔒 privado</span>
       </div>
       <div class="foot-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.4 19.79 19.79 0 01.1 4.77 2 2 0 012.07 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 9.4a16 16 0 006.72 6.72l.83-.83a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.4 19.79 19.79 0 01.1 4.77 2 2 0 012.07 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 9.4a16 16 0 006.72 6.72l.83-.83a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
         <span class="contact-private">+54 9 11 5834-2917</span>
         <span class="contact-lock" data-i18n="contact-lock2">🔒 privado</span>
       </div>
       <div class="foot-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
         <span class="contact-private">linkedin.com/in/matias-pedreira</span>
         <span class="contact-lock" data-i18n="contact-lock3">🔒 privado</span>
       </div>
       <div class="foot-link">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
         <span class="contact-private">github.com/matiaspedreira</span>
         <span class="contact-lock" data-i18n="contact-lock4">🔒 privado</span>
       </div>
@@ -1065,6 +1059,7 @@ nav{
 <script>
 /* ─────────────────────────────────────────────
    CANVAS BACKGROUND — animated halftone waves
+   (subtle: low opacity, faster animation)
 ───────────────────────────────────────────── */
 (function(){
   const canvas = document.getElementById('bgCanvas');
@@ -1080,7 +1075,6 @@ nav{
   const SPACING = 28;
   let t = 0;
 
-  // Short-path hue lerp
   function lerpHue(h0, h1, f){
     let d = h1 - h0;
     if(d > 180) d -= 360;
@@ -1088,13 +1082,12 @@ nav{
     return ((h0 + d * f) % 360 + 360) % 360;
   }
 
-  // Color gradient: yellow → orange → pink → purple → blue
   const stops = [
-    [0,    40],   // yellow
-    [0.20, 18],   // orange
-    [0.42, 330],  // pink-magenta
-    [0.68, 270],  // purple
-    [1.00, 228]   // blue-indigo
+    [0,    40],
+    [0.20, 18],
+    [0.42, 330],
+    [0.68, 270],
+    [1.00, 228]
   ];
 
   function getHue(pos){
@@ -1119,31 +1112,28 @@ nav{
         const x = c * SPACING;
         const y = r * SPACING;
 
-        // Layered slow waves
         const w1 = Math.sin(c * 0.18 + t * 0.28);
         const w2 = Math.cos(r * 0.14 + t * 0.22);
         const w3 = Math.sin((c * 0.1 + r * 0.1) + t * 0.35);
-        const wave = (w1 + w2 + w3) / 3;   // −1..1
-        const norm = (wave + 1) / 2;         // 0..1
+        const wave = (w1 + w2 + w3) / 3;
+        const norm = (wave + 1) / 2;
 
-        const radius = norm * 7.5 + 0.4;
-
-        // Diagonal position + wave offsets color
+        // Smaller dots, much lower opacity
+        const radius = norm * 4.5 + 0.3;
         const xn = c / cols;
         const yn = r / rows;
         const colorPos = ((xn * 0.55 + yn * 0.35 + norm * 0.12 + t * 0.018) % 1 + 1) % 1;
         const hue = getHue(colorPos);
-
-        const alpha = 0.28 + norm * 0.22;
+        const alpha = 0.06 + norm * 0.07;
 
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${hue.toFixed(0)},100%,58%,${alpha.toFixed(2)})`;
+        ctx.fillStyle = `hsla(${hue.toFixed(0)},90%,58%,${alpha.toFixed(2)})`;
         ctx.fill();
       }
     }
 
-    t += 0.006;
+    t += 0.012; // faster
     requestAnimationFrame(draw);
   }
   draw();
@@ -1155,9 +1145,9 @@ nav{
 const T = {
   es: {
     'hero-sub':    'Full Stack Developer &amp; Tech Lead',
-    'hero-bio':    'Desarrollador full stack con <strong>enfoque integral</strong>: desde servidores y bases de datos hasta la experiencia del usuario final. <strong>Autónomo, proactivo y orientado a resultados.</strong> Especializado en digitalizar y optimizar procesos de negocios — incluyendo <em>logística, turismo y aviación</em>.',
+    'hero-bio':    'Desarrollador full stack con <strong>enfoque integral</strong>: desde servidores y bases de datos hasta la experiencia del usuario final. <strong>Autónomo, proactivo y orientado a resultados.</strong> Especializado en digitalizar y optimizar procesos de negocios — incluyendo <em>logística, envíos, turismo y aviación</em>.',
     'cta-exp':     'Ver experiencia →',
-    'hero-loc':    'Buenos Aires, Argentina · 24 años',
+    'hero-loc':    'Buenos Aires, Argentina · 28 años',
     'swipe-label': 'deslizá para explorar',
     's2-label':    '01 &nbsp;Sobre mí',
     's2-title':    'Código, diseño<br>y negocio.',
@@ -1185,13 +1175,13 @@ const T = {
     'job3-b2':     'Plataformas de digitalización para negocios con alta dependencia de procesos manuales.',
     'job3-b3':     'Consultoría en arquitectura para startups en etapas tempranas.',
     'job3-b4':     '<em>Partner oficial de Tiendanube</em> — desarrollo e integración de tiendas en el ecosistema de la plataforma.',
-    'badge-today': 'hoy',
+    'badge-today': 'actualmente',
     'job4-role':   'Full Stack Developer Semi-Sr. / Tech Lead',
     'job4-desc':   'Rol de referencia técnica. <strong>Gestión integral</strong>: de requerimientos hasta producción.',
     'job4-b1':     'Sitios institucionales, e-commerce y aplicaciones web a medida.',
     'job4-b2':     'Arquitectura de servidores y modelos de base de datos.',
     'job4-b3':     'Operación <strong>100% autónoma</strong>, sin supervisión técnica.',
-    'scroll-hint': 'scroll',
+    'scroll-hint': 'deslizá',
     's4-label':    '03 &nbsp;Habilidades',
     's4-title':    'Stack técnico<br>completo.',
     'sk1-title':   'Interfaces',
@@ -1235,9 +1225,9 @@ const T = {
   },
   en: {
     'hero-sub':    'Full Stack Developer &amp; Tech Lead',
-    'hero-bio':    'Full stack developer with a <strong>comprehensive approach</strong>: from servers and databases to the end-user experience. <strong>Autonomous, proactive, and results-driven.</strong> Specialized in digitalizing and optimizing business processes — including <em>logistics, tourism, and aviation</em>.',
+    'hero-bio':    'Full stack developer with a <strong>comprehensive approach</strong>: from servers and databases to the end-user experience. <strong>Autonomous, proactive, and results-driven.</strong> Specialized in digitalizing and optimizing business processes — including <em>logistics, shipping, tourism, and aviation</em>.',
     'cta-exp':     'View experience →',
-    'hero-loc':    'Buenos Aires, Argentina · 24 years old',
+    'hero-loc':    'Buenos Aires, Argentina · 28 years old',
     'swipe-label': 'swipe to explore',
     's2-label':    '01 &nbsp;About me',
     's2-title':    'Code, design<br>and business.',
@@ -1265,7 +1255,7 @@ const T = {
     'job3-b2':     'Digitalization platforms for businesses heavily reliant on manual processes.',
     'job3-b3':     'Architecture consulting for early-stage startups.',
     'job3-b4':     '<em>Official Tiendanube Partner</em> — development and integration of stores within the platform ecosystem.',
-    'badge-today': 'today',
+    'badge-today': 'current',
     'job4-role':   'Full Stack Developer Semi-Sr. / Tech Lead',
     'job4-desc':   'Technical reference role. <strong>Full ownership</strong>: from requirements to production.',
     'job4-b1':     'Institutional sites, e-commerce, and custom web applications.',
@@ -1324,20 +1314,17 @@ function applyTranslations(lang){
       el.innerHTML = T[lang][key];
     }
   });
-  // Update nav dot labels
   slides.forEach((s, i) => {
     const lbl = s.getAttribute('data-label-' + lang) || s.getAttribute('data-label');
     s.setAttribute('data-label', lbl);
     const dot = dotsContainer.querySelectorAll('.nav-dot')[i];
     if(dot){ dot.setAttribute('aria-label', lbl); dot.title = lbl; }
   });
-  // Update progress label for current slide
   progLabel.textContent = slides[current].getAttribute('data-label');
 }
 
 function toggleLang(){
   currentLang = currentLang === 'es' ? 'en' : 'es';
-  document.getElementById('langFlag').textContent = currentLang === 'es' ? '🇬🇧' : '🇦🇷';
   document.getElementById('langCode').textContent = currentLang === 'es' ? 'EN' : 'ES';
   applyTranslations(currentLang);
 }
@@ -1346,19 +1333,19 @@ window.toggleLang = toggleLang;
 /* ─────────────────────────────────────────────
    SLIDES ENGINE
 ───────────────────────────────────────────── */
-const wrap         = document.getElementById('slidesWrap');
-const slides       = Array.from(document.querySelectorAll('.slide'));
-const dotsContainer= document.getElementById('navDots');
-const btnPrev      = document.getElementById('btnPrev');
-const btnNext      = document.getElementById('btnNext');
-const progFill     = document.getElementById('progFill');
-const progLabel    = document.getElementById('progLabel');
-const progCur      = document.getElementById('progCur');
-const expSwipeRight= document.getElementById('expSwipeRight');
-const scrollDownHint=document.getElementById('scrollDownHint');
-const langBtn      = document.getElementById('langBtn');
-const total        = slides.length;
-let current        = 0;
+const wrap          = document.getElementById('slidesWrap');
+const slides        = Array.from(document.querySelectorAll('.slide'));
+const dotsContainer = document.getElementById('navDots');
+const btnPrev       = document.getElementById('btnPrev');
+const btnNext       = document.getElementById('btnNext');
+const progFill      = document.getElementById('progFill');
+const progLabel     = document.getElementById('progLabel');
+const progCur       = document.getElementById('progCur');
+const expSwipeRight = document.getElementById('expSwipeRight');
+const scrollDownHint= document.getElementById('scrollDownHint');
+const langBtn       = document.getElementById('langBtn');
+const total         = slides.length;
+let current         = 0;
 
 // Build nav dots
 slides.forEach((s, i) => {
@@ -1382,7 +1369,6 @@ function updateUI(idx){
   progLabel.textContent = slides[idx].getAttribute('data-label');
   progCur.textContent   = pad(idx + 1);
 
-  // Trigger lang bars on edu slide
   if(slides[idx].id === 'slide-edu'){
     setTimeout(() => {
       slides[idx].querySelectorAll('.lang-fill').forEach(f => {
@@ -1391,12 +1377,10 @@ function updateUI(idx){
     }, 300);
   }
 
-  // Hide exp swipe hint when leaving
   if(slides[idx].id !== 'slide-exp'){
     expSwipeRight.classList.remove('visible');
   }
 
-  // Show/hide lang button only on hero slide
   if(idx === 0){
     langBtn.classList.add('visible');
   } else {
@@ -1414,7 +1398,6 @@ btnPrev.addEventListener('click', () => { if(current > 0) goToSlide(current - 1)
 btnNext.addEventListener('click', () => { if(current < total - 1) goToSlide(current + 1); });
 langBtn.addEventListener('click', toggleLang);
 
-// Scroll sync
 let scrollTimer;
 wrap.addEventListener('scroll', () => {
   clearTimeout(scrollTimer);
@@ -1424,7 +1407,6 @@ wrap.addEventListener('scroll', () => {
   }, 80);
 });
 
-// Experience slide: scroll hints
 const expSlide = document.getElementById('slide-exp');
 let swipeNudgeTimer;
 
@@ -1444,7 +1426,6 @@ expSlide.addEventListener('scroll', () => {
   }
 });
 
-// Keyboard nav
 document.addEventListener('keydown', e => {
   if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ if(current < total-1) goToSlide(current+1); }
   if(e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  { if(current > 0)       goToSlide(current-1); }
