@@ -76,6 +76,13 @@ html,body{
 .slide::-webkit-scrollbar{width:3px}
 .slide::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:2px}
 
+/* Desktop Spacing (hace que no se vea apretado en computadora) */
+@media (min-width: 1024px) {
+  .slide {
+    padding: clamp(2.5rem, 6vw, 4rem) clamp(3rem, 8vw, 8rem) 4rem;
+  }
+}
+
 /* ─ NAV ─ */
 nav{
   position:fixed;top:0;left:0;right:0;z-index:200;
@@ -227,24 +234,6 @@ nav{
 }
 .chip.hi{border-color:rgba(91,244,181,.3);color:var(--accent);background:var(--accent-dim)}
 
-/* ─ BTN ─ */
-.btn-p{
-  padding:.75rem 1.8rem;border-radius:10px;
-  background:var(--accent);color:#0a0c13;
-  font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;
-  display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:none;
-  transition:opacity var(--t),transform var(--t);
-}
-.btn-p:hover{opacity:.85;transform:translateY(-2px)}
-.btn-g{
-  padding:.75rem 1.8rem;border-radius:10px;
-  border:1px solid var(--border-2);background:transparent;color:var(--text);
-  font-family:'Syne',sans-serif;font-weight:600;font-size:1rem;
-  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
-  transition:border-color var(--t),color var(--t),transform var(--t);
-}
-.btn-g:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-
 /* ─ KREA BRAND ─ */
 .krea-text{
   font-family:'Syne',sans-serif;font-weight:800;font-style:italic;
@@ -299,10 +288,6 @@ nav{
   display:flex;flex-wrap:wrap;gap:6px;margin-bottom:1.5rem;
   animation:fadeUp .7s .4s both ease;
 }
-.hero-cta{
-  display:flex;flex-wrap:wrap;gap:8px;align-items:center;
-  animation:fadeUp .7s .5s both ease;
-}
 .loc{
   display:inline-flex;align-items:center;gap:6px;
   font-family:'Space Mono',monospace;font-size:.82rem;
@@ -310,7 +295,15 @@ nav{
   animation:fadeUp .7s .6s both ease;
 }
 
-/* ─ SWIPE CTA — more prominent ─ */
+/* Espacio extra de hero-bio solo en Desktop */
+@media (min-width: 1024px) {
+  .hero-bio {
+    max-width: 850px;
+    font-size: 1.25rem;
+  }
+}
+
+/* ─ SWIPE CTA ─ */
 .swipe-cta{
   position:absolute;
   bottom:1.4rem;left:0;right:0;
@@ -523,13 +516,31 @@ nav{
 }
 .exp-company{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem}
 .exp-company .krea-text{font-size:.95rem}
-.exp-role{font-size:.78rem;color:var(--accent);font-family:'Space Mono',monospace;margin-bottom:.5rem;letter-spacing:.3px}
-.exp-desc{font-size:.95rem;color:var(--soft);font-weight:300;line-height:1.75;margin-bottom:.5rem}
-.exp-desc strong{color:var(--text);font-weight:500}
+
+/* MEJORAS DE LECTURA EN TRAYECTORIA */
+.exp-role{
+  font-size:.85rem; /* Aumentado ligeramente */
+  color:var(--accent);
+  font-family:'Space Mono',monospace;
+  margin-bottom:.5rem;
+  letter-spacing:.3px;
+}
+.exp-desc{
+  font-size:1rem; /* Aumentado para mejor lectura */
+  color:rgba(255, 255, 255, 0.9); /* Más blanco, más contraste */
+  font-weight:400; /* Normal en lugar de light */
+  line-height:1.8;
+  margin-bottom:.5rem;
+}
+.exp-desc strong{color:var(--text);font-weight:600}
 .exp-bullets{display:flex;flex-direction:column;gap:4px;margin-bottom:.5rem}
 .exp-bullets li{
-  font-size:.9rem;color:var(--soft);font-weight:300;
-  line-height:1.65;padding-left:1rem;position:relative;
+  font-size:.95rem; /* Aumentado para mejor lectura */
+  color:rgba(255, 255, 255, 0.8); /* Más contraste */
+  font-weight:400; /* Normal */
+  line-height:1.7;
+  padding-left:1rem;
+  position:relative;
 }
 .exp-bullets li::before{content:'›';position:absolute;left:0;color:var(--accent);font-weight:700}
 .exp-bullets li em{color:var(--accent);font-style:normal;font-weight:500}
@@ -687,15 +698,12 @@ nav{
 </head>
 <body>
 
-<!-- CANVAS BACKGROUND -->
 <canvas id="bgCanvas"></canvas>
 
-<!-- LANG BUTTON (hero only) -->
 <button id="langBtn" aria-label="Switch language">
   <span id="langCode">EN</span>
 </button>
 
-<!-- NAV -->
 <nav>
   <div class="nav-in">
     <span class="logo">MP<span>.dev</span></span>
@@ -717,10 +725,8 @@ nav{
   </div>
 </nav>
 
-<!-- SLIDES -->
 <div class="slides-wrap" id="slidesWrap">
 
-  <!-- SLIDE 1: HERO -->
   <div class="slide" id="slide-hero" data-label-es="Inicio" data-label-en="Home" data-label="Inicio">
     <div class="hero-inner">
       <h1 class="hero-name">Matias<br><span class="acc">Pedreira.</span></h1>
@@ -740,16 +746,12 @@ nav{
         <span class="chip">Figma · UX/UI</span>
         <span class="chip">APIs REST</span>
       </div>
-      <div class="hero-cta">
-        <button class="btn-p" onclick="goToSlide(2)" data-i18n="cta-exp">Ver experiencia →</button>
-      </div>
       <p class="loc">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
         <span data-i18n="hero-loc">Buenos Aires, Argentina · 28 años</span>
       </p>
     </div>
 
-    <!-- SWIPE CTA -->
     <div class="swipe-cta">
       <div class="swipe-cta-inner">
         <div class="swipe-phone">
@@ -763,7 +765,6 @@ nav{
     </div>
   </div>
 
-  <!-- SLIDE 2: SOBRE -->
   <div class="slide" id="slide-sobre" data-label-es="Sobre mí" data-label-en="About" data-label="Sobre mí">
     <p class="section-label"><span data-i18n="s2-label">01 &nbsp;Sobre mí</span></p>
     <h2 class="section-title" data-i18n="s2-title">Código, diseño<br>y negocio.</h2>
@@ -782,7 +783,6 @@ nav{
     </div>
   </div>
 
-  <!-- SLIDE 3: EXPERIENCIA -->
   <div class="slide" id="slide-exp" data-label-es="Experiencia" data-label-en="Experience" data-label="Experiencia">
     <p class="section-label"><span data-i18n="s3-label">02 &nbsp;Experiencia</span></p>
     <h2 class="section-title" data-i18n="s3-title">Trayectoria<br>profesional.</h2>
@@ -893,7 +893,6 @@ nav{
     </div>
   </div>
 
-  <!-- SLIDE 4: SKILLS -->
   <div class="slide" id="slide-skills" data-label-es="Skills" data-label-en="Skills" data-label="Skills">
     <p class="section-label"><span data-i18n="s4-label">03 &nbsp;Habilidades</span></p>
     <h2 class="section-title" data-i18n="s4-title">Stack técnico<br>completo.</h2>
@@ -925,7 +924,6 @@ nav{
     </div>
   </div>
 
-  <!-- SLIDE 5: CERTS -->
   <div class="slide" id="slide-certs" data-label-es="Certs" data-label-en="Certs" data-label="Certs">
     <p class="section-label"><span data-i18n="s5-label">04 &nbsp;Certificaciones</span></p>
     <h2 class="section-title" data-i18n="s5-title">Credenciales<br>verificadas.</h2>
@@ -957,7 +955,6 @@ nav{
     </div>
   </div>
 
-  <!-- SLIDE 6: EDUCACION -->
   <div class="slide" id="slide-edu" data-label-es="Educación" data-label-en="Education" data-label="Educación">
     <p class="section-label"><span data-i18n="s6-label">05 &nbsp;Educación</span></p>
     <h2 class="section-title" data-i18n="s6-title">Formación<br>académica.</h2>
@@ -994,7 +991,6 @@ nav{
     </div>
   </div>
 
-  <!-- SLIDE 7: CONTACTO -->
   <div class="slide" id="slide-contacto" data-label-es="Contacto" data-label-en="Contact" data-label="Contacto">
     <div class="foot-name">Matias<br><span style="color:var(--accent)">Pedreira.</span></div>
     <div class="foot-tag">Full Stack Developer · Buenos Aires, AR</div>
@@ -1039,13 +1035,11 @@ nav{
 
 </div>
 
-<!-- SWIPE RIGHT HINT -->
 <div class="exp-swipe-right" id="expSwipeRight">
   <span class="exp-swipe-right-label" data-i18n="next-slide">siguiente slide</span>
   <div class="exp-sr-arrows"><span></span><span></span><span></span></div>
 </div>
 
-<!-- BOTTOM PROGRESS BAR -->
 <div class="progress-bar">
   <span class="prog-label" id="progLabel">Inicio</span>
   <div class="prog-track"><div class="prog-fill" id="progFill" style="width:14.28%"></div></div>
@@ -1059,7 +1053,6 @@ nav{
 <script>
 /* ─────────────────────────────────────────────
    CANVAS BACKGROUND — animated halftone waves
-   (subtle: low opacity, faster animation)
 ───────────────────────────────────────────── */
 (function(){
   const canvas = document.getElementById('bgCanvas');
@@ -1118,13 +1111,13 @@ nav{
         const wave = (w1 + w2 + w3) / 3;
         const norm = (wave + 1) / 2;
 
-        // Smaller dots, much lower opacity
         const radius = norm * 4.5 + 0.3;
         const xn = c / cols;
         const yn = r / rows;
         const colorPos = ((xn * 0.55 + yn * 0.35 + norm * 0.12 + t * 0.018) % 1 + 1) % 1;
         const hue = getHue(colorPos);
-        const alpha = 0.06 + norm * 0.07;
+        // Más opacidad para que resalten un poco más
+        const alpha = 0.15 + norm * 0.12;
 
         ctx.beginPath();
         ctx.arc(x, y, radius, 0, Math.PI * 2);
@@ -1133,7 +1126,7 @@ nav{
       }
     }
 
-    t += 0.012; // faster
+    t += 0.028; // Bastante más rápido (antes 0.012)
     requestAnimationFrame(draw);
   }
   draw();
