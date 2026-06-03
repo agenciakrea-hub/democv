@@ -69,17 +69,18 @@ html,body{
   scroll-snap-stop:always;
   overflow-y:auto;overflow-x:hidden;
   scrollbar-width:thin;
-  scrollbar-color:var(--surface-3) transparent;
+  scrollbar-color:var(--accent) transparent; /* Ajuste color del scroll */
   padding:clamp(1.2rem,4vw,2.5rem) clamp(.9rem,4vw,2rem) 4rem;
   position:relative;
 }
-.slide::-webkit-scrollbar{width:3px}
-.slide::-webkit-scrollbar-thumb{background:var(--surface-3);border-radius:2px}
+.slide::-webkit-scrollbar{width:4px}
+.slide::-webkit-scrollbar-thumb{background:var(--accent);border-radius:2px} /* Ajuste color del scroll */
 
 /* Desktop Spacing (hace que no se vea apretado en computadora) */
 @media (min-width: 1024px) {
   .slide {
-    padding: clamp(2.5rem, 6vw, 4rem) clamp(3rem, 8vw, 8rem) 4rem;
+    /* El 4vh permite que en pantallas bajas (laptops) no haya tanto padding arriba */
+    padding: clamp(1.5rem, 4vh, 4rem) clamp(3rem, 8vw, 8rem) 4rem;
   }
 }
 
@@ -243,8 +244,11 @@ nav{
 
 /* ─ HERO SLIDE ─ */
 #slide-hero{
-  display:flex;flex-direction:column;justify-content:center;
-  position:relative;overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow-x:hidden;
+  /* Se remueve el justify-content:center rígido para evitar solapamientos en pantallas bajas */
 }
 #slide-hero::before{
   content:'';position:absolute;inset:0;z-index:0;
@@ -259,10 +263,17 @@ nav{
   background:radial-gradient(ellipse,rgba(91,244,181,.06) 0%,transparent 70%);
   pointer-events:none;z-index:0;
 }
-.hero-inner{position:relative;z-index:1}
+.hero-inner{
+  position:relative;
+  z-index:1;
+  /* Auto margen centra el bloque de texto en pantallas altas y lo empuja arriba en pantallas bajas */
+  margin: auto 0;
+  padding-top: 2rem;
+}
 .hero-name{
   font-family:'Syne',sans-serif;font-weight:800;
-  font-size:clamp(2.8rem,11vw,7rem);
+  /* Se ajustó levemente el tamaño para que no reviente en resoluciones chicas de PC */
+  font-size:clamp(2.5rem, 8vw, 6rem);
   line-height:.93;letter-spacing:-3px;
   margin-bottom:1rem;
   animation:fadeUp .7s .1s both ease;
@@ -305,8 +316,11 @@ nav{
 
 /* ─ SWIPE CTA ─ */
 .swipe-cta{
-  position:absolute;
-  bottom:1.4rem;left:0;right:0;
+  position:relative;
+  /* El margin-top: auto lo empuja al fondo si la pantalla es alta */
+  margin-top:auto;
+  padding-bottom: 2rem;
+  padding-top: 3rem; /* Espacio de seguridad por si el texto llega muy abajo */
   display:flex;flex-direction:column;align-items:center;gap:10px;
   animation:fadeUp .7s .9s both ease;
   pointer-events:none;z-index:2;
@@ -519,25 +533,25 @@ nav{
 
 /* MEJORAS DE LECTURA EN TRAYECTORIA */
 .exp-role{
-  font-size:.85rem; /* Aumentado ligeramente */
+  font-size:.85rem; 
   color:var(--accent);
   font-family:'Space Mono',monospace;
   margin-bottom:.5rem;
   letter-spacing:.3px;
 }
 .exp-desc{
-  font-size:1rem; /* Aumentado para mejor lectura */
-  color:rgba(255, 255, 255, 0.9); /* Más blanco, más contraste */
-  font-weight:400; /* Normal en lugar de light */
+  font-size:1rem; 
+  color:rgba(255, 255, 255, 0.9); 
+  font-weight:400; 
   line-height:1.8;
   margin-bottom:.5rem;
 }
 .exp-desc strong{color:var(--text);font-weight:600}
 .exp-bullets{display:flex;flex-direction:column;gap:4px;margin-bottom:.5rem}
 .exp-bullets li{
-  font-size:.95rem; /* Aumentado para mejor lectura */
-  color:rgba(255, 255, 255, 0.8); /* Más contraste */
-  font-weight:400; /* Normal */
+  font-size:.95rem; 
+  color:rgba(255, 255, 255, 0.8); 
+  font-weight:400; 
   line-height:1.7;
   padding-left:1rem;
   position:relative;
@@ -1116,7 +1130,6 @@ nav{
         const yn = r / rows;
         const colorPos = ((xn * 0.55 + yn * 0.35 + norm * 0.12 + t * 0.018) % 1 + 1) % 1;
         const hue = getHue(colorPos);
-        // Más opacidad para que resalten un poco más
         const alpha = 0.15 + norm * 0.12;
 
         ctx.beginPath();
@@ -1126,7 +1139,7 @@ nav{
       }
     }
 
-    t += 0.028; // Bastante más rápido (antes 0.012)
+    t += 0.045; // Más rápido (antes 0.028)
     requestAnimationFrame(draw);
   }
   draw();
